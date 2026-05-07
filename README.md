@@ -9,6 +9,12 @@ Repository ini digunakan untuk menyimpan tugas, laporan, konfigurasi, dan dokume
 2. **Hafidz Ulum Ramadhani**
 3. **Dhafin Ardra Madany**
 
+## Judul Modul
+* Modul 1 : Konfigurasi Dasar Jaringan IPv4
+* Modul 2 : Routing & Manajemen IPv6
+* Modul 3 : Wireless LAN dan Ubiquitous
+* Modul 4 : Firewall dan NAT
+
 ## 📚 Tentang Repository
 
 Repository ini berisi:
