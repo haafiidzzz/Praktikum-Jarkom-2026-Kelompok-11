@@ -7,7 +7,7 @@ Repository ini digunakan untuk menyimpan tugas, laporan, konfigurasi, dan dokume
 
 1. **Athaya Khairani Adi**
 2. **Hafidz Ulum Ramadhani**
-3. **Dhafin Adra Madhany**
+3. **Dhafin **
 
 ## 📚 Tentang Repository
 
