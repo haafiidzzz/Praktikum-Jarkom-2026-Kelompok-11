@@ -1,7 +1,6 @@
 # Praktikum Jaringan Komputer - Kelompok 11
 
 Selamat datang di repository **Praktikum Jaringan Komputer Kelompok 11**.
-Repository ini digunakan untuk menyimpan tugas, laporan, konfigurasi, dan dokumentasi praktikum mata kuliah Jaringan Komputer.
 
 ## 👥 Anggota Kelompok 11
 
@@ -17,21 +16,15 @@ Repository ini digunakan untuk menyimpan tugas, laporan, konfigurasi, dan dokume
 
 ## 📚 Tentang Repository
 
-Repository ini berisi:
-
-* Tugas praktikum jaringan komputer
-* Konfigurasi jaringan
-* Dokumentasi hasil praktikum
-* Source code dan file pendukung
-* Laporan praktikum
+Repository ini berisi laporan praktikum yang terdiri dari :
+* Laporan Sementara
+* Laporan Akhir
 
 ## 🛠️ Tools yang Digunakan
 
 * Cisco Packet Tracer
 * Wireshark
-* VirtualBox / VMware
-* Linux Ubuntu
-* Git & GitHub
+* Winbox 3.41
 
 ## 📂 Struktur Repository
 
@@ -45,18 +38,5 @@ Praktikum-Jarkom-Kelompok-11/
 └── README.md
 ```
 
-## 🎯 Tujuan
-
-Melakukan pembelajaran dan implementasi konsep jaringan komputer seperti:
-
-* Konfigurasi IP Address
-* Routing
-* Switching
-* Subnetting
-* Client-Server
-* Analisis paket jaringan
-* Dan materi jaringan lainnya
-
----
 
 ✨ Terima kasih telah mengunjungi repository kami!
