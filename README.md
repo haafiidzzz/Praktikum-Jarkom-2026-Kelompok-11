@@ -13,6 +13,7 @@ Selamat datang di repository **Praktikum Jaringan Komputer Kelompok 11**.
 * Modul 2 : Routing & Manajemen IPv6
 * Modul 3 : Wireless LAN dan Ubiquitous
 * Modul 4 : Firewall dan NAT
+* Modul 5 : Konfigurasi OSPF Multivendor
 
 ## 📚 Tentang Repository
 
