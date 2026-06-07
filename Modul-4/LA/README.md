@@ -397,8 +397,7 @@ Pengujian dilakukan untuk memverifikasi konektivitas antar zona sesuai dengan ke
 ```bash
 ping 192.168.10.1
 ```
-**Hasil yang diharapkan:** Reply  
-**Hasil aktual:** Reply
+**Hasil :** Reply
 
 Pengujian ini memverifikasi bahwa Client LAN dapat menjangkau gateway-nya sendiri, yaitu Cisco Router, yang merupakan syarat dasar konektivitas jaringan LAN.
 
@@ -414,8 +413,7 @@ Pengujian ini memverifikasi bahwa Client LAN dapat menjangkau gateway-nya sendir
 ```bash
 ping 10.20.20.1
 ```
-**Hasil yang diharapkan:** Reply  
-**Hasil aktual:** Reply
+**Hasil :** Reply
 
 Pengujian ini memverifikasi bahwa lalu lintas dari LAN dapat melewati Cisco Router dan menjangkau interface FortiGate yang menghadap ke LAN.
 
@@ -431,8 +429,8 @@ Pengujian ini memverifikasi bahwa lalu lintas dari LAN dapat melewati Cisco Rout
 ```bash
 ping 192.168.20.10
 ```
-**Hasil yang diharapkan:** Reply  
-**Hasil aktual:** Reply
+
+**Hasil :** Reply
 
 Pengujian ini memverifikasi bahwa firewall policy `LAN_to_DMZ` pada FortiGate telah mengizinkan lalu lintas ICMP dari zona LAN menuju zona DMZ.
 
@@ -448,8 +446,8 @@ Pengujian ini memverifikasi bahwa firewall policy `LAN_to_DMZ` pada FortiGate te
 ```bash
 curl http://192.168.20.10
 ```
-**Hasil yang diharapkan:** Halaman web `Tumod_4_DMZ_Firewall_03-Kelompok11` tampil  
-**Hasil aktual:** `<h1>Tumod_4_DMZ_Firewall_03-Kelompok11</h1>`
+**Hasil :** Halaman web `Tumod_4_DMZ_Firewall_03-Kelompok11` tampil  
+
 
 > Sebelum pengujian akses web, lynx diinstal terlebih dahulu pada TinyCore Linux karena tidak tersedia secara default. Proses instalasi membutuhkan koneksi internet yang aktif, dibuktikan dengan ping ke 8.8.8.8 yang berhasil.
 
@@ -470,8 +468,8 @@ Pengujian ini memverifikasi bahwa Nginx aktif berjalan pada Ubuntu Server DMZ da
 ```bash
 ping 172.16.100.1
 ```
-**Hasil yang diharapkan:** Reply  
-**Hasil aktual:** Reply
+
+**Hasil :** Reply
 
 Pengujian ini memverifikasi bahwa Client WAN terhubung dengan gateway-nya, yaitu interface ether3 MikroTik ISP.
 
@@ -487,8 +485,8 @@ Pengujian ini memverifikasi bahwa Client WAN terhubung dengan gateway-nya, yaitu
 ```bash
 ping 10.10.10.2
 ```
-**Hasil yang diharapkan:** Reply  
-**Hasil aktual:** Reply
+ 
+**Hasil :** Reply
 
 Pengujian ini memverifikasi bahwa Client WAN dapat menjangkau interface WAN FortiGate melalui jaringan MikroTik ISP.
 
@@ -504,8 +502,8 @@ Pengujian ini memverifikasi bahwa Client WAN dapat menjangkau interface WAN Fort
 ```bash
 curl http://10.10.10.2
 ```
-**Hasil yang diharapkan:** Halaman web `Tumod_4_DMZ_Firewall_03-Kelompok11` tampil  
-**Hasil aktual:** `<h1>Tumod_4_DMZ_Firewall_03-Kelompok11</h1>`
+**Hasil :** Halaman web `Tumod_4_DMZ_Firewall_03-Kelompok11` tampil  
+
 
 Pengujian ini merupakan validasi utama konfigurasi VIP dan port forwarding. Permintaan HTTP yang dikirim ke `10.10.10.2` oleh FortiGate diteruskan ke `192.168.20.10` melalui mekanisme Destination NAT. Client WAN berhasil mengakses konten web server tanpa mengetahui IP asli server DMZ.
 
@@ -523,8 +521,8 @@ Pengujian ini merupakan validasi utama konfigurasi VIP dan port forwarding. Perm
 ```bash
 ping 192.168.10.10
 ```
-**Hasil yang diharapkan:** Timeout (diblokir firewall)  
-**Hasil aktual:** 100% packet loss
+**Hasil :** Timeout (diblokir firewall) ,100% packet loss
+
 
 Tidak ada firewall policy yang mengizinkan lalu lintas dari zona WAN menuju zona LAN. FortiGate memblokir seluruh paket tersebut, sehingga Client WAN tidak dapat mengakses jaringan internal LAN. Hasil ini sesuai dengan prinsip desain DMZ yang memisahkan zona publik dari zona privat.
 
@@ -540,8 +538,7 @@ Tidak ada firewall policy yang mengizinkan lalu lintas dari zona WAN menuju zona
 ```bash
 ping 192.168.20.10
 ```
-**Hasil yang diharapkan:** Timeout (diblokir firewall)  
-**Hasil aktual:** 100% packet loss
+**Hasil :** Timeout (diblokir firewall) ,100% packet loss
 
 Firewall policy `WAN_to_DMZ_HTTP` hanya mengizinkan protokol HTTP melalui VIP. Tidak ada policy yang mengizinkan ICMP dari WAN ke IP asli server DMZ. Hal ini memastikan bahwa server DMZ hanya dapat diakses melalui jalur yang telah ditentukan, yaitu melalui VIP pada port 80, sehingga lapisan keamanan tambahan terpenuhi.
 
@@ -557,10 +554,9 @@ Firewall policy `WAN_to_DMZ_HTTP` hanya mengizinkan protokol HTTP melalui VIP. T
 ```bash
 ping 192.168.10.10
 ```
-**Hasil yang diharapkan:** Reply  
-**Hasil aktual:** 100% packet loss
+**Hasil :** Timeout (diblokir firewall) ,100% packet loss
 
-Berdasarkan screenshot yang tersedia, ping dari Server DMZ ke Client LAN menunjukkan packet loss. Hal ini menandakan bahwa tidak ada firewall policy yang secara eksplisit mengizinkan lalu lintas ICMP dari zona DMZ menuju zona LAN. Kondisi ini dapat diterima sebagai bagian dari kebijakan keamanan yang memisahkan DMZ dari LAN, namun apabila diperlukan konektivitas dua arah, policy tambahan perlu ditambahkan pada FortiGate.
+Ping dari Server DMZ ke Client LAN menunjukkan packet loss. Hal ini menandakan bahwa tidak ada firewall policy yang mengizinkan lalu lintas ICMP dari zona DMZ menuju zona LAN. 
 
 ![Pengujian 10 - Server DMZ Ping Client LAN](../images/tumod1.jpeg)
 
@@ -603,7 +599,7 @@ VIP pada FortiGate berfungsi sebagai mekanisme Destination NAT yang menerjemahka
 
 **Efektivitas Firewall Policy**
 
-Hasil pengujian nomor 8 dan 9 membuktikan bahwa kebijakan default-deny pada FortiGate berfungsi dengan baik. Lalu lintas yang tidak secara eksplisit diizinkan oleh policy akan diblokir secara otomatis. Client WAN tidak dapat mengakses jaringan LAN maupun IP asli server DMZ, yang merupakan perilaku yang diinginkan dalam desain DMZ.
+Hasil pengujian nomor 8, 9, dan 10 membuktikan bahwa kebijakan default-deny pada FortiGate berfungsi dengan baik. Lalu lintas yang tidak diizinkan oleh policy akan diblokir secara otomatis. Client WAN tidak dapat mengakses jaringan LAN maupun IP asli server DMZ, dan Server DMZ tidak dapat memulai koneksi ke jaringan LAN. 
 
 **Pemisahan Akses HTTP dari ICMP**
 
@@ -611,12 +607,10 @@ Policy `WAN_to_DMZ_HTTP` yang hanya mengizinkan layanan HTTP menunjukkan prinsip
 
 ### 7.2 Kesimpulan
 
-Praktikum ini berhasil mengimplementasikan arsitektur jaringan DMZ (Demilitarized Zone) menggunakan perangkat MikroTik, FortiGate, dan Cisco Router dalam lingkungan simulasi PNETLab. Beberapa kesimpulan yang dapat ditarik adalah sebagai berikut.
-
 Pertama, FortiGate terbukti efektif sebagai firewall stateful yang mampu membedakan lalu lintas berdasarkan zona asal, zona tujuan, layanan, dan arah koneksi. Kombinasi antara firewall policy dan VIP memberikan fleksibilitas dalam mengatur akses publik ke server yang berada di zona DMZ tanpa mengorbankan keamanan jaringan internal.
 
-Kedua, arsitektur DMZ berhasil memisahkan server publik dari jaringan internal LAN. Klien dari sisi WAN hanya dapat mengakses layanan yang secara eksplisit diizinkan, yaitu HTTP ke server DMZ melalui VIP, sementara akses ke jaringan LAN dan IP asli server DMZ sepenuhnya diblokir oleh firewall.
+Kedua, arsitektur DMZ berhasil memisahkan server publik dari jaringan internal LAN. Klien dari sisi WAN hanya dapat mengakses layanan yang diizinkan, yaitu HTTP ke server DMZ melalui VIP, sementara akses ke jaringan LAN dan IP asli server DMZ sepenuhnya diblokir oleh firewall.
 
-Ketiga, konfigurasi routing statis pada setiap perangkat memainkan peran penting dalam memastikan paket dapat mencapai tujuannya melalui jalur yang benar. Default route pada setiap perangkat mengarah ke perangkat di lapisan atasnya, sehingga membentuk jalur routing yang hirarkis dan teratur.
+Ketiga, konfigurasi routing statis pada setiap perangkat memainkan peran penting dalam memastikan paket dapat mencapai tujuannya melalui jalur yang benar.
 
 Keempat, penggunaan NAT masquerade pada MikroTik ISP dan policy `LAN_to_WAN` pada FortiGate memungkinkan klien internal mengakses internet menggunakan alamat IP publik, yang merupakan implementasi standar dalam jaringan nyata untuk menghemat penggunaan alamat IP publik.
