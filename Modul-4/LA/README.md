@@ -32,7 +32,7 @@
 
 Topologi yang digunakan pada praktikum ini terdiri atas empat zona jaringan utama, yaitu zona Internet, Outside Zone (WAN), DMZ Zone, dan LAN Zone. MikroTik berperan sebagai router ISP yang menghubungkan seluruh zona ke internet. FortiGate berfungsi sebagai firewall utama yang mengatur dan memfilter lalu lintas antar zona. Cisco Router (vIOS) menghubungkan FortiGate ke jaringan LAN internal. Ubuntu Server ditempatkan di zona DMZ sebagai web server, sementara TinyCore Linux digunakan sebagai perangkat klien baik di sisi LAN maupun WAN.
 
-![Topologi Jaringan](../images/tumod11.jpeg)
+![Topologi Jaringan](../images/topologitumod.jpeg)
 
 ---
 
