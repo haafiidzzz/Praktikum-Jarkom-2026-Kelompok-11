@@ -32,7 +32,7 @@
 
 Topologi yang digunakan pada praktikum ini terdiri atas empat zona jaringan utama, yaitu zona Internet, Outside Zone (WAN), DMZ Zone, dan LAN Zone. MikroTik berperan sebagai router ISP yang menghubungkan seluruh zona ke internet. FortiGate berfungsi sebagai firewall utama yang mengatur dan memfilter lalu lintas antar zona. Cisco Router (vIOS) menghubungkan FortiGate ke jaringan LAN internal. Ubuntu Server ditempatkan di zona DMZ sebagai web server, sementara TinyCore Linux digunakan sebagai perangkat klien baik di sisi LAN maupun WAN.
 
-![Topologi Jaringan](images/tumod11.jpeg)
+![Topologi Jaringan](../images/tumod11.jpeg)
 
 ---
 
@@ -109,11 +109,11 @@ MikroTik dikonfigurasi sebagai router ISP yang menghubungkan seluruh zona ke int
 
 Hasil verifikasi konfigurasi IP address dan routing table pada MikroTik ditunjukkan pada gambar berikut.
 
-![Konfigurasi MikroTik - IP Address dan Route](images/tumod12.jpeg)
+![Konfigurasi MikroTik - IP Address dan Route](../images/tumod12.jpeg)
 
 Gambar di atas memperlihatkan bahwa MikroTik telah memperoleh IP dinamis `10.4.89.182/24` pada ether1 melalui DHCP Client, IP statis `10.10.10.1/30` pada ether2, dan `172.16.100.1/24` pada ether3. Tabel routing menunjukkan dua rute statis aktif menuju `192.168.10.0/24` dan `192.168.20.0/24` via gateway `10.10.10.2`, serta NAT masquerade telah terpasang pada ether1.
 
-![Konfigurasi MikroTik - Verifikasi Lengkap](images/tumod11.jpeg)
+![Konfigurasi MikroTik - Verifikasi Lengkap](../images/tumod11.jpeg)
 
 ---
 
@@ -142,7 +142,7 @@ end
 
 Hasil verifikasi konfigurasi interface FortiGate diperlihatkan pada gambar berikut.
 
-![Konfigurasi FortiGate - System Interface](images/tumod9.jpeg)
+![Konfigurasi FortiGate - System Interface](../images/tumod9.jpeg)
 
 **Konfigurasi Routing:**
 
@@ -165,7 +165,7 @@ end
 
 Tabel routing FortiGate setelah konfigurasi ditampilkan pada gambar berikut.
 
-![Konfigurasi FortiGate - Routing Table](images/tumod10.jpeg)
+![Konfigurasi FortiGate - Routing Table](../images/tumod10.jpeg)
 
 Gambar di atas memperlihatkan bahwa FortiGate memiliki default route menuju `10.10.10.1` melalui port1, rute statis menuju `192.168.10.0/24` via `10.20.20.2` melalui port2, serta jaringan `192.168.20.0/24` yang terhubung langsung pada port3.
 
@@ -184,7 +184,7 @@ end
 
 Daftar address object yang telah dikonfigurasi ditunjukkan pada gambar berikut.
 
-![Konfigurasi FortiGate - Firewall Address](images/tumod7.jpeg)
+![Konfigurasi FortiGate - Firewall Address](../images/tumod7.jpeg)
 
 **Konfigurasi Firewall Policy:**
 
@@ -239,7 +239,7 @@ end
 
 Hasil konfigurasi firewall policy pada FortiGate diperlihatkan pada gambar berikut.
 
-![Konfigurasi FortiGate - Firewall Policy](images/tumod8.jpeg)
+![Konfigurasi FortiGate - Firewall Policy](../images/tumod8.jpeg)
 
 **Konfigurasi VIP (Virtual IP / Port Forwarding):**
 
@@ -260,7 +260,7 @@ end
 
 Hasil konfigurasi VIP pada FortiGate ditunjukkan pada gambar berikut.
 
-![Konfigurasi FortiGate - VIP](images/tumod5.jpeg)
+![Konfigurasi FortiGate - VIP](../images/tumod5.jpeg)
 
 ---
 
@@ -291,7 +291,7 @@ copy running-config startup-config
 
 Hasil verifikasi konfigurasi Cisco Router diperlihatkan pada gambar berikut.
 
-![Konfigurasi Cisco Router - IP Interface dan Routing](images/tumod6.jpeg)
+![Konfigurasi Cisco Router - IP Interface dan Routing](../images/tumod6.jpeg)
 
 Gambar di atas memperlihatkan bahwa GigabitEthernet0/0 telah mendapatkan IP `10.20.20.2` dengan status up/up, GigabitEthernet0/1 mendapatkan IP `192.168.10.1` dengan status up/up, serta tabel routing menampilkan default route `0.0.0.0/0` via `10.20.20.1` yang aktif.
 
@@ -350,7 +350,7 @@ service nginx status
 
 Hasil konfigurasi dan status Nginx pada Ubuntu Server DMZ ditunjukkan pada gambar berikut.
 
-![Konfigurasi Ubuntu Server DMZ - Nginx dan IP](images/tumod13.jpeg)
+![Konfigurasi Ubuntu Server DMZ - Nginx dan IP](../images/tumod13.jpeg)
 
 Gambar di atas memperlihatkan bahwa Nginx berstatus `active (running)`, IP statis `192.168.20.10/24` telah terpasang pada interface eth0, dan isi file `index.html` telah diubah menjadi `Tumod_4_DMZ_Firewall_03-Kelompok11`.
 
@@ -403,7 +403,7 @@ ping 192.168.10.1
 
 Pengujian ini memverifikasi bahwa Client LAN dapat menjangkau gateway-nya sendiri, yaitu Cisco Router, yang merupakan syarat dasar konektivitas jaringan LAN.
 
-![Pengujian 1 - Client LAN ke Gateway Cisco](images/tumod3.jpeg)
+![Pengujian 1 - Client LAN ke Gateway Cisco](../images/tumod3.jpeg)
 
 ---
 
@@ -420,7 +420,7 @@ ping 10.20.20.1
 
 Pengujian ini memverifikasi bahwa lalu lintas dari LAN dapat melewati Cisco Router dan menjangkau interface FortiGate yang menghadap ke LAN.
 
-![Pengujian 2 - Client LAN ke FortiGate](images/tumod3.jpeg)
+![Pengujian 2 - Client LAN ke FortiGate](../images/tumod3.jpeg)
 
 ---
 
@@ -437,7 +437,7 @@ ping 192.168.20.10
 
 Pengujian ini memverifikasi bahwa firewall policy `LAN_to_DMZ` pada FortiGate telah mengizinkan lalu lintas ICMP dari zona LAN menuju zona DMZ.
 
-![Pengujian 3 - Client LAN ke Server DMZ](images/tumod3.jpeg)
+![Pengujian 3 - Client LAN ke Server DMZ](../images/tumod3.jpeg)
 
 ---
 
@@ -454,7 +454,7 @@ curl http://192.168.20.10
 
 Pengujian ini memverifikasi bahwa Nginx aktif berjalan pada Ubuntu Server DMZ dan dapat diakses oleh klien LAN secara langsung melalui IP asli server.
 
-![Pengujian 4 - Client LAN Akses Web DMZ](images/tumod3.jpeg)
+![Pengujian 4 - Client LAN Akses Web DMZ](../images/tumod3.jpeg)
 
 ---
 
@@ -471,7 +471,7 @@ ping 172.16.100.1
 
 Pengujian ini memverifikasi bahwa Client WAN terhubung dengan gateway-nya, yaitu interface ether3 MikroTik ISP.
 
-![Pengujian 5 - Client WAN ke MikroTik ISP](images/tumod2.jpeg)
+![Pengujian 5 - Client WAN ke MikroTik ISP](../images/tumod2.jpeg)
 
 ---
 
@@ -488,7 +488,7 @@ ping 10.10.10.2
 
 Pengujian ini memverifikasi bahwa Client WAN dapat menjangkau interface WAN FortiGate melalui jaringan MikroTik ISP.
 
-![Pengujian 6 - Client WAN ke FortiGate WAN](images/tumod2.jpeg)
+![Pengujian 6 - Client WAN ke FortiGate WAN](../images/tumod2.jpeg)
 
 ---
 
@@ -505,7 +505,7 @@ curl http://10.10.10.2
 
 Pengujian ini merupakan validasi utama konfigurasi VIP dan port forwarding. Permintaan HTTP yang dikirim ke `10.10.10.2` oleh FortiGate diteruskan ke `192.168.20.10` melalui mekanisme Destination NAT. Client WAN berhasil mengakses konten web server tanpa mengetahui IP asli server DMZ.
 
-![Pengujian 7 - Client WAN Akses Web via VIP](images/tumod2.jpeg)
+![Pengujian 7 - Client WAN Akses Web via VIP](../images/tumod2.jpeg)
 
 ---
 
@@ -522,7 +522,7 @@ ping 192.168.10.10
 
 Tidak ada firewall policy yang mengizinkan lalu lintas dari zona WAN menuju zona LAN. FortiGate memblokir seluruh paket tersebut, sehingga Client WAN tidak dapat mengakses jaringan internal LAN. Hasil ini sesuai dengan prinsip desain DMZ yang memisahkan zona publik dari zona privat.
 
-![Pengujian 8 - Client WAN Ping Client LAN (Gagal)](images/tumod2.jpeg)
+![Pengujian 8 - Client WAN Ping Client LAN (Gagal)](../images/tumod2.jpeg)
 
 ---
 
@@ -539,7 +539,7 @@ ping 192.168.20.10
 
 Firewall policy `WAN_to_DMZ_HTTP` hanya mengizinkan protokol HTTP melalui VIP. Tidak ada policy yang mengizinkan ICMP dari WAN ke IP asli server DMZ. Hal ini memastikan bahwa server DMZ hanya dapat diakses melalui jalur yang telah ditentukan, yaitu melalui VIP pada port 80, sehingga lapisan keamanan tambahan terpenuhi.
 
-![Pengujian 9 - Client WAN Ping IP Asli DMZ (Gagal)](images/tumod2.jpeg)
+![Pengujian 9 - Client WAN Ping IP Asli DMZ (Gagal)](../images/tumod2.jpeg)
 
 ---
 
@@ -556,7 +556,7 @@ ping 192.168.10.10
 
 Berdasarkan screenshot yang tersedia, ping dari Server DMZ ke Client LAN menunjukkan packet loss. Hal ini menandakan bahwa tidak ada firewall policy yang secara eksplisit mengizinkan lalu lintas ICMP dari zona DMZ menuju zona LAN. Kondisi ini dapat diterima sebagai bagian dari kebijakan keamanan yang memisahkan DMZ dari LAN, namun apabila diperlukan konektivitas dua arah, policy tambahan perlu ditambahkan pada FortiGate.
 
-![Pengujian 10 - Server DMZ Ping Client LAN](images/tumod1.jpeg)
+![Pengujian 10 - Server DMZ Ping Client LAN](../images/tumod1.jpeg)
 
 ---
 
