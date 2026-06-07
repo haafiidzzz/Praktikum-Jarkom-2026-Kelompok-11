@@ -447,7 +447,7 @@ curl http://192.168.20.10
 
 > Sebelum pengujian akses web, lynx diinstal terlebih dahulu pada TinyCore Linux karena tidak tersedia secara default. Proses instalasi membutuhkan koneksi internet yang aktif, dibuktikan dengan ping ke 8.8.8.8 yang berhasil.
 
-![Instalasi Lynx](../images/install_lynx.jpeg)
+![Instalasi Lynx](../images/installlynx.jpeg)
 
 Pengujian ini memverifikasi bahwa Nginx aktif berjalan pada Ubuntu Server DMZ dan dapat diakses oleh klien LAN secara langsung melalui IP asli server.
 
