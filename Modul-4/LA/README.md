@@ -1,8 +1,7 @@
 # Laporan Tugas Modul 4
-
-**Mata Kuliah:** Jaringan Komputer  
+ 
 **Modul:** Firewall dan NAT  
-**Kelompok:** 11 
+**Kelompok:** 11 <br>
 **Nama Anggota:**  
 1. Athaya Khairani Adi 5024241007 
 2. Hafidz Ulum Ramadhani 5024241014
@@ -452,9 +451,14 @@ curl http://192.168.20.10
 **Hasil yang diharapkan:** Halaman web `Tumod_4_DMZ_Firewall_03-Kelompok11` tampil  
 **Hasil aktual:** `<h1>Tumod_4_DMZ_Firewall_03-Kelompok11</h1>`
 
+> Sebelum pengujian akses web, lynx diinstal terlebih dahulu pada TinyCore Linux karena tidak tersedia secara default. Proses instalasi membutuhkan koneksi internet yang aktif, dibuktikan dengan ping ke 8.8.8.8 yang berhasil.
+
+![Instalasi Lynx](../images/install_lynx.jpeg)
+
 Pengujian ini memverifikasi bahwa Nginx aktif berjalan pada Ubuntu Server DMZ dan dapat diakses oleh klien LAN secara langsung melalui IP asli server.
 
 ![Pengujian 4 - Client LAN Akses Web DMZ](../images/tumod3.jpeg)
+![Pengujian 4 - Client LAN Akses Web DMZ](../images/lan.jpeg)
 
 ---
 
@@ -506,6 +510,8 @@ curl http://10.10.10.2
 Pengujian ini merupakan validasi utama konfigurasi VIP dan port forwarding. Permintaan HTTP yang dikirim ke `10.10.10.2` oleh FortiGate diteruskan ke `192.168.20.10` melalui mekanisme Destination NAT. Client WAN berhasil mengakses konten web server tanpa mengetahui IP asli server DMZ.
 
 ![Pengujian 7 - Client WAN Akses Web via VIP](../images/tumod2.jpeg)
+
+![Pengujian 7 - Client WAN Akses Web via VIP](../images/wan.jpeg)
 
 ---
 
