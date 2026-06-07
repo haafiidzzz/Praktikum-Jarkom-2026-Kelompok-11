@@ -1,12 +1,12 @@
-# Laporan Tugas Modul 4: DMZ Firewall
+# Laporan Tugas Modul 4
 
 **Mata Kuliah:** Jaringan Komputer  
 **Modul:** Firewall dan NAT  
-**Kelompok:** 03  
+**Kelompok:** 11 
 **Nama Anggota:**  
-1. ...  
-2. ...  
-3. ...  
+1. Athaya Khairani Adi 5024241007 
+2. Hafidz Ulum Ramadhani 5024241014
+3. Dhafin Ardra Madany 5024241054
 
 ---
 
