@@ -583,7 +583,7 @@ Implementasi topologi DMZ Firewall pada praktikum ini berhasil mendemonstrasikan
 
 **Segmentasi Jaringan Berbasis Zona**
 
-Penggunaan tiga zona berbeda, yaitu WAN, LAN, dan DMZ, memungkinkan penerapan kebijakan keamanan yang granular dan terpisah untuk setiap zona. FortiGate sebagai firewall utama menjadi titik kendali tunggal yang mengatur seluruh lalu lintas antar zona. Desain ini mencegah akses langsung dari zona publik ke zona privat, sehingga mengurangi permukaan serangan secara signifikan.
+Penggunaan tiga zona berbeda, yaitu WAN, LAN, dan DMZ, memungkinkan penerapan kebijakan keamanan yang granular dan terpisah untuk setiap zona. FortiGate sebagai firewall utama menjadi titik kendali tunggal yang mengatur seluruh lalu lintas antar zona. Hal ini mencegah akses langsung dari zona publik ke zona privat, sehingga mengurangi permukaan serangan secara signifikan.
 
 **Fungsi NAT dan Masquerade**
 
@@ -599,7 +599,7 @@ Hasil pengujian nomor 8, 9, dan 10 membuktikan bahwa kebijakan default-deny pada
 
 **Pemisahan Akses HTTP dari ICMP**
 
-Policy `WAN_to_DMZ_HTTP` yang hanya mengizinkan layanan HTTP menunjukkan prinsip least privilege dalam keamanan jaringan. Client WAN berhasil mengakses web server melalui curl, namun tidak dapat melakukan ping ke IP asli server DMZ karena ICMP tidak diizinkan. Pendekatan ini membatasi vektor serangan yang tersedia bagi pihak eksternal.
+Policy `WAN_to_DMZ_HTTP` yang hanya mengizinkan layanan HTTP menunjukkan prinsip least privilege dalam keamanan jaringan. Client WAN berhasil mengakses web server melalui curl, namun tidak dapat melakukan ping ke IP asli server DMZ karena ICMP tidak diizinkan. Pendekatan ini membatasi serangan yang tersedia bagi pihak eksternal.
 
 ### 7.2 Kesimpulan
 
