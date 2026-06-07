@@ -385,10 +385,6 @@ echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
 
 ## 6. Hasil Pengujian
 
-Pengujian dilakukan untuk memverifikasi konektivitas antar zona sesuai dengan kebijakan firewall yang telah ditetapkan. Setiap pengujian menggunakan perintah `ping` untuk menguji konektivitas ICMP dan perintah `curl` untuk menguji akses HTTP ke web server DMZ.
-
----
-
 ### Pengujian 1: Client LAN ke Gateway Cisco
 
 **Perangkat asal:** Client LAN (TinyCore Linux, 192.168.10.10)  
