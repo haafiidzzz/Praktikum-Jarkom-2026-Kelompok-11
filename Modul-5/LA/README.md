@@ -2,7 +2,14 @@
 
 > **Mata Kuliah:** Jaringan Komputer  
 > **Topik:** VLAN · Trunk · Inter-VLAN Routing · DHCP · OSPF over GRE · Failover VRRP  
-> **Platform:** PNETLab  
+> **Platform:** PNETLab
+ 
+**Kelompok:** 11 <br>
+**Nama Anggota:**  
+1. Athaya Khairani Adi 5024241007 
+2. Hafidz Ulum Ramadhani 5024241014
+3. Dhafin Ardra Madany 5024241054
+
 
 ---
 
@@ -356,13 +363,13 @@ Client yang berasal dari Surabaya dapat mengakses web server yang berada di Jaka
 
 | No | Yang Diuji | Hasil |
 |:---:|---|:---:|
-| 1 | VLAN 10 Jakarta mendapat IP DHCP dari Ubuntu Server | ✅ Berhasil |
-| 2 | VLAN 20 Jakarta mendapat IP DHCP dari Ubuntu Server | ✅ Berhasil |
-| 3 | VLAN 30 Surabaya mendapat IP DHCP dari MikroTik Surabaya | ✅ Berhasil |
-| 4 | VLAN 40 Surabaya menggunakan IP statis | ✅ Berhasil |
-| 5 | Client Jakarta dapat ping ke 8.8.8.8 (internet) | ✅ Berhasil |
-| 6 | Client Surabaya dapat ping ke 8.8.8.8 (internet) | ✅ Berhasil |
-| 7 | Client Jakarta dapat ping ke client Surabaya | ✅ Berhasil |
-| 8 | Client Surabaya dapat ping ke client Jakarta | ✅ Berhasil |
-| 9 | Client Surabaya dapat mengakses web server Jakarta | ✅ Berhasil |
-| 10 | Failover gateway VRRP berjalan saat vIOS dimatikan | ✅ Berhasil |
+| 1 | VLAN 10 Jakarta mendapat IP DHCP dari Ubuntu Server | Berhasil |
+| 2 | VLAN 20 Jakarta mendapat IP DHCP dari Ubuntu Server | Berhasil |
+| 3 | VLAN 30 Surabaya mendapat IP DHCP dari MikroTik Surabaya | Berhasil |
+| 4 | VLAN 40 Surabaya menggunakan IP statis | Berhasil |
+| 5 | Client Jakarta dapat ping ke 8.8.8.8 (internet) | Berhasil |
+| 6 | Client Surabaya dapat ping ke 8.8.8.8 (internet) | Berhasil |
+| 7 | Client Jakarta dapat ping ke client Surabaya | Berhasil |
+| 8 | Client Surabaya dapat ping ke client Jakarta | Berhasil |
+| 9 | Client Surabaya dapat mengakses web server Jakarta | Berhasil |
+| 10 | Failover gateway VRRP berjalan saat vIOS dimatikan | Berhasil |
