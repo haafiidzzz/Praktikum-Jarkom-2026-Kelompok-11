@@ -49,7 +49,7 @@ Membuat VLAN di Switch Jakarta agar setiap perangkat dapat dikelompokkan berdasa
 ### Hasil
 Perintah `show vlan brief` menampilkan bahwa VLAN 10 (FINANCE), VLAN 20 (IT), dan VLAN 60 (SERVER-HQ) sudah aktif dan terpasang di port yang benar. Perintah `show interfaces trunk` memastikan bahwa port `Gi0/0` dan `Gi0/1` berstatus **trunking** dan membawa VLAN 10, 20, serta 60.
 
-![Verifikasi VLAN dan Trunk Switch Jakarta](assets/tugas1.png)
+![Verifikasi VLAN dan Trunk Switch Jakarta](../assets/tugas1.png)
 
 ---
 
@@ -72,15 +72,15 @@ Mengatur router vIOS-Jakarta agar mampu menjadi gateway untuk setiap VLAN melalu
 ### Hasil
 Perintah `show ip interface brief` menunjukkan semua sub-interface sudah mendapatkan IP dan berstatus **up/up**. Perintah `show vrrp brief` mengonfirmasi bahwa vIOS-Jakarta menjadi **Master** untuk VRRP group 10 dan 60 (priority lebih tinggi), sedangkan untuk group 20 menjadi **Master** karena Mikrotik-Jakarta memiliki priority lebih rendah.
 
-![Konfigurasi Sub-Interface vIOS-Jakarta](assets/tugas2subinterface.png)
+![Konfigurasi Sub-Interface vIOS-Jakarta](../assets/tugas2subinterface.png)
 
-![Sub-Interface Lanjutan & Default Route](assets/tugas2subinterface2.png)
+![Sub-Interface Lanjutan & Default Route](../assets/tugas2subinterface2.png)
 
-![Verifikasi IP Interface & VRRP Brief](assets/tugas2.png)
+![Verifikasi IP Interface & VRRP Brief](../assets/tugas2.png)
 
 Pengujian ping dari vIOS-Jakarta ke `10.10.100.1` (FortiGate Jakarta) berhasil dengan success rate 100%.
 
-![Ping vIOS-Jakarta ke FortiGate](assets/tugas2ping.png)
+![Ping vIOS-Jakarta ke FortiGate](../assets/tugas2ping.png)
 
 ---
 
@@ -106,13 +106,13 @@ Mengatur Mikrotik-Jakarta sebagai router cadangan (backup) menggunakan VRRP, seh
 ### Hasil
 Mikrotik-Jakarta berhasil terkonfigurasi dengan lengkap. Terbukti dari output `/ip address print` yang menampilkan IP untuk semua VLAN, `/interface vrrp print` menunjukkan status **RM (Running Master)** untuk vrrp20, serta DHCP relay aktif untuk VLAN 10 dan VLAN 20.
 
-![Konfigurasi Mikrotik-Jakarta — IP Address, VRRP, Route, DHCP Relay](assets/tugas3.1.png)
+![Konfigurasi Mikrotik-Jakarta — IP Address, VRRP, Route, DHCP Relay](../assets/tugas3.1.png)
 
-![Detail Konfigurasi Mikrotik-Jakarta Lengkap](assets/tugas3.2.png)
+![Detail Konfigurasi Mikrotik-Jakarta Lengkap](../assets/tugas3.2.png)
 
 Pengujian ping dari Mikrotik-Jakarta ke FortiGate sisi Jakarta (`10.10.101.1`) berhasil dengan 0% packet loss.
 
-![Ping Mikrotik-Jakarta ke FortiGate](assets/tugas3ping.png)
+![Ping Mikrotik-Jakarta ke FortiGate](../assets/tugas3ping.png)
 
 ---
 
@@ -126,14 +126,14 @@ Mengatur Ubuntu Server yang berada di VLAN 60 sebagai server DHCP yang mendistri
 2. Install paket DHCP server: `apt install isc-dhcp-server`.
 3. Edit file `/etc/default/isc-dhcp-server` untuk menentukan interface yang digunakan, yaitu `eth0`.
 
-   ![Konfigurasi Default ISC-DHCP-Server](assets/tugas4.1.png)
+   ![Konfigurasi Default ISC-DHCP-Server](../assets/tugas4.1.png)
 
 4. Edit file konfigurasi utama `/etc/dhcp/dhcpd.conf` dan tambahkan:
    - Pool untuk **VLAN 10** (Finance): range `192.168.10.100–200`, gateway `192.168.10.1`, DNS `8.8.8.8, 1.1.1.1`
    - Pool untuk **VLAN 20** (IT): range `192.168.20.100–200`, gateway `192.168.20.1`
    - Deklarasi subnet untuk **VLAN 60** tanpa range (server sendiri)
 
-   ![Isi File dhcpd.conf](assets/tugas4.2.png)
+   ![Isi File dhcpd.conf](../assets/tugas4.2.png)
 
 5. Restart dan aktifkan service DHCP: `systemctl restart isc-dhcp-server` dan `systemctl enable isc-dhcp-server`.
 6. Cek status service untuk memastikan berjalan.
@@ -141,11 +141,11 @@ Mengatur Ubuntu Server yang berada di VLAN 60 sebagai server DHCP yang mendistri
 ### Hasil
 Service DHCP berhasil berjalan dengan status **active (running)**. Log menunjukkan server mulai mendengarkan permintaan DHCP di interface `eth0` pada subnet `192.168.60.0/24`.
 
-![DHCP Server Aktif & Running](assets/tugas4dhcprunning.png)
+![DHCP Server Aktif & Running](../assets/tugas4dhcprunning.png)
 
 Ubuntu server sendiri memiliki IP `192.168.60.10/24` dan dapat terhubung ke internet (`ping 8.8.8.8` berhasil).
 
-![Verifikasi IP Ubuntu & Ping ke Internet](assets/tugas4ubunteping.png)
+![Verifikasi IP Ubuntu & Ping ke Internet](../assets/tugas4ubunteping.png)
 
 ### Pengujian — Client Mendapatkan IP dari DHCP
 
@@ -153,19 +153,19 @@ Setelah DHCP server aktif dan DHCP relay terkonfigurasi di router, seluruh clien
 
 - **VLAN 10** mendapat IP `192.168.10.100/24` via gateway `192.168.10.1`
 
-  ![VLAN 10 Mendapat IP DHCP](assets/tugas4vlan10dhcp.png)
+  ![VLAN 10 Mendapat IP DHCP](../assets/tugas4vlan10dhcp.png)
 
 - **VLAN 20** mendapat IP `192.168.20.100/24` via gateway `192.168.20.1`
 
-  ![VLAN 20 Mendapat IP DHCP](assets/tugas4vlan20dhcp.png)
+  ![VLAN 20 Mendapat IP DHCP](../assets/tugas4vlan20dhcp.png)
 
 - **VLAN 30** (Surabaya) mendapat IP `192.168.30.200/24` dari DHCP Mikrotik-Surabaya
 
-  ![VLAN 30 Mendapat IP DHCP](assets/tugas4vlan30dhcp.png)
+  ![VLAN 30 Mendapat IP DHCP](../assets/tugas4vlan30dhcp.png)
 
 - **VLAN 40** (Surabaya) dikonfigurasi **IP Statis** `192.168.40.10/24` sesuai ketentuan, bukan DHCP
 
-  ![VLAN 40 IP Statis & Ping ke Internet](assets/tugas4vlan40static.png)
+  ![VLAN 40 IP Statis & Ping ke Internet](../assets/tugas4vlan40static.png)
 
   > VLAN 40 berhasil `ping 8.8.8.8`, membuktikan konfigurasi statis dan routing berjalan dengan baik.
 
@@ -188,17 +188,17 @@ Mengatur FortiGate Jakarta sebagai firewall sekaligus gateway keluar (NAT) untuk
 ### Hasil
 Perintah `get system interface physical` mengonfirmasi semua interface sudah mendapat IP dan berstatus **up**. Tabel routing FortiGate menampilkan route statis ke tiga subnet VLAN Jakarta dan default route ke ISP.
 
-![FortiGate Jakarta — Interface Physical](assets/tugas5.1.png)
+![FortiGate Jakarta — Interface Physical](../assets/tugas5.1.png)
 
-![FortiGate Jakarta — Routing Table](assets/tugas5.2.png)
+![FortiGate Jakarta — Routing Table](../assets/tugas5.2.png)
 
 Firewall policy **LAN-TO-INTERNET** berhasil terbuat dengan NAT diaktifkan, memungkinkan seluruh client di belakang FortiGate mengakses internet.
 
-![Firewall Policy FortiGate Jakarta](assets/tugas5.3.png)
+![Firewall Policy FortiGate Jakarta](../assets/tugas5.3.png)
 
 Pengujian ping dari FortiGate ke internet (`8.8.8.8`), ke vIOS-Jakarta (`10.10.100.2`), dan ke Mikrotik-ISP (`10.0.12.1`) semuanya berhasil 100%.
 
-![Ping FortiGate ke Internet & Tetangga](assets/tugas5.png)
+![Ping FortiGate ke Internet & Tetangga](../assets/tugas5.png)
 
 ---
 
@@ -219,15 +219,15 @@ Mengatur Mikrotik-ISP sebagai router inti yang menghubungkan sisi Jakarta dan si
 ### Hasil
 Output `/ip address print` memperlihatkan semua IP sudah terpasang dengan benar. `/ip route print` menunjukkan default route aktif via `10.0.137.1`. `/ip firewall nat print` mengonfirmasi aturan masquerade sudah aktif di `ether1`.
 
-![Konfigurasi Mikrotik-ISP — IP, Route, NAT](assets/tugas6.1.png)
+![Konfigurasi Mikrotik-ISP — IP, Route, NAT](../assets/tugas6.1.png)
 
 Pengujian ping dari Mikrotik-ISP ke internet (`8.8.8.8`) berhasil dengan 0% packet loss, membuktikan koneksi ISP berfungsi normal.
 
-![Ping Mikrotik-ISP ke Internet](assets/tugas6.2.png)
+![Ping Mikrotik-ISP ke Internet](../assets/tugas6.2.png)
 
 Ping ke FortiGate Jakarta (`10.0.12.2`) juga berhasil sempurna, menandakan koneksi antar ISP dan sisi Jakarta terhubung dengan baik.
 
-![Ping Mikrotik-ISP ke FortiGate Jakarta](assets/tugas6.3.png)
+![Ping Mikrotik-ISP ke FortiGate Jakarta](../assets/tugas6.3.png)
 
 ---
 
