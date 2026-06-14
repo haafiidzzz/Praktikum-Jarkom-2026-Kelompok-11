@@ -141,28 +141,6 @@ Ubuntu server sendiri memiliki IP `192.168.60.10/24` dan dapat terhubung ke inte
 
 ![Verifikasi IP Ubuntu & Ping ke Internet](../assets/8.888.jpeg)
 
-### Pengujian — Client Mendapatkan IP dari DHCP
-
-Setelah DHCP server aktif dan DHCP relay terkonfigurasi di router, seluruh client VLAN berhasil mendapatkan IP secara otomatis:
-
-- **VLAN 10** mendapat IP `192.168.10.100/24` via gateway `192.168.10.1`
-
-  ![VLAN 10 Mendapat IP DHCP](../assets/vlan10.jpeg)
-
-- **VLAN 20** mendapat IP `192.168.20.100/24` via gateway `192.168.20.1`
-
-  ![VLAN 20 Mendapat IP DHCP](../assets/vlan20.jpeg)
-
-- **VLAN 30** (Surabaya) mendapat IP `192.168.30.200/24` dari DHCP Mikrotik-Surabaya
-
-  ![VLAN 30 Mendapat IP DHCP](../assets/vlan30.jpeg)
-
-- **VLAN 40** (Surabaya) dikonfigurasi **IP Statis** `192.168.40.10/24` sesuai ketentuan, bukan DHCP
-
-  ![VLAN 40 IP Statis & Ping ke Internet](../assets/vlan40.jpeg)
-
-  > VLAN 40 berhasil `ping 8.8.8.8`, membuktikan konfigurasi statis dan routing berjalan dengan baik.
-
 ---
 
 ## Tugas 5 — Konfigurasi FortiGate Jakarta
