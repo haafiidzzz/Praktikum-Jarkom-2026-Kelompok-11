@@ -39,7 +39,7 @@ Membuat pemisahan jaringan menggunakan VLAN pada Switch-Jakarta (Cisco) agar set
 ### Hasil
 Perintah `show vlan brief` memperlihatkan ketiga VLAN sudah terdaftar dan aktif: VLAN 10 (FINANCE) terhubung ke Gi0/3, VLAN 20 (IT) ke Gi0/2, dan VLAN 60 (SERVER-HQ) ke Gi1/0. Perintah `show interfaces trunk` memperlihatkan port Gi0/0 dan Gi0/1 sudah berjalan dalam mode trunking dengan VLAN yang diizinkan adalah 10, 20, dan 60.
 
-![Hasil Konfigurasi VLAN Switch-Jakarta](tugas%201.png)
+![Hasil Konfigurasi VLAN Switch-Jakarta](tugas_1.png)
 
 ---
 
@@ -60,26 +60,21 @@ Mengonfigurasi vIOS-Jakarta sebagai router utama (master) untuk setiap VLAN meng
 6. Simpan konfigurasi dengan `write memory`.
 
 ### Hasil
-Perintah `show ip interface brief` menampilkan semua subinterface sudah aktif dengan alamat IP yang benar. Perintah `show vrrp brief` memperlihatkan:
-- Gi0/1.10 menjadi **Master** dengan prioritas 110.
-- Gi0/1.20 menjadi **Master** dengan prioritas 90.
-- Gi0/1.60 menjadi **Master** dengan prioritas 120.
-
-Koneksi ke FortiGate (10.10.100.1) berhasil dicapai dari vIOS-Jakarta.
+Perintah `show ip interface brief` menampilkan semua subinterface sudah aktif dengan alamat IP yang benar. Perintah `show vrrp brief` memperlihatkan ketiga subinterface menjadi **Master**. Koneksi ke FortiGate (10.10.100.1) berhasil dicapai dari vIOS-Jakarta.
 
 **Konfigurasi subinterface (running-config):**
 
-![Subinterface VLAN 10 dan 20](tugas%202%20subinterface.png)
+![Subinterface VLAN 10 dan 20](tugas_2_subinterface.png)
 
-![Subinterface VLAN 60 dan lanjutan](tugas%202%20subinterface%202.png)
+![Subinterface VLAN 60 dan lanjutan](tugas_2_subinterface_2.png)
 
 **Verifikasi VRRP dan ping ke FortiGate:**
 
-![Verifikasi VRRP dan Ping](tugas%202.png)
+![Verifikasi VRRP dan Ping](tugas_2.png)
 
 **Ping dari vIOS-Jakarta ke FortiGate berhasil (100%):**
 
-![Ping ke FortiGate Berhasil](tugas%202%20ping.png)
+![Ping ke FortiGate Berhasil](tugas_2_ping.png)
 
 ---
 
@@ -103,15 +98,13 @@ Mengonfigurasi Mikrotik-Jakarta sebagai router cadangan (backup) VRRP. Mikrotik 
 6. Tambahkan **DHCP Relay** pada vlan10-finance dan vlan20-it yang mengarah ke server DHCP `192.168.60.10`.
 
 ### Hasil
-Perintah `/ip address print` memperlihatkan semua alamat IP sudah terpasang dengan benar, termasuk alamat-alamat VRRP virtual. Perintah `/interface vrrp print` menunjukkan semua antarmuka VRRP berjalan (status RM = Running as Master/Backup). Perintah `/ip route print` menampilkan routing table yang sudah lengkap dengan default route dan rute ke semua subnet VLAN. Perintah `/ip dhcp-relay print` memperlihatkan relay aktif untuk VLAN 10 dan VLAN 20 yang mengarah ke `192.168.60.10`.
+Perintah `/ip address print` memperlihatkan semua alamat IP sudah terpasang dengan benar, termasuk alamat-alamat VRRP virtual. Perintah `/interface vrrp print` menunjukkan semua antarmuka VRRP berjalan. Perintah `/ip route print` menampilkan routing table lengkap dengan default route dan rute ke semua subnet VLAN. Perintah `/ip dhcp-relay print` memperlihatkan relay aktif untuk VLAN 10 dan VLAN 20 yang mengarah ke `192.168.60.10`. Uji konektivitas dengan `ping 10.10.101.1` berhasil dengan **packet loss 0%**.
 
-Uji konektivitas dengan `ping 10.10.101.1` dari Mikrotik menuju FortiGate berhasil dengan **packet loss 0%**.
+![Verifikasi IP Address, VRRP, Route, dan DHCP Relay Mikrotik-Jakarta (halaman 1)](tugas_3_1.png)
 
-![Verifikasi IP Address, VRRP, Route, dan DHCP Relay Mikrotik-Jakarta (halaman 1)](tugas%203%201.png)
+![Verifikasi IP Address, VRRP, Route, dan DHCP Relay Mikrotik-Jakarta (halaman 2)](tugas_3_2.png)
 
-![Verifikasi IP Address, VRRP, Route, dan DHCP Relay Mikrotik-Jakarta (halaman 2)](tugas%203%202.png)
-
-![Hasil Ping dari Mikrotik-Jakarta ke FortiGate](tugas%203%20ping.png)
+![Hasil Ping dari Mikrotik-Jakarta ke FortiGate](tugas_3_ping.png)
 
 ---
 
@@ -132,11 +125,11 @@ Menjadikan Ubuntu di VLAN 60 sebagai server DHCP terpusat yang membagikan alamat
 6. Uji konektivitas Ubuntu ke internet dengan `ping 8.8.8.8`.
 
 ### Hasil
-File konfigurasi `/etc/dhcp/dhcpd.conf` berhasil tersimpan dengan tiga blok deklarasi subnet (VLAN 10, 20, dan 60). Perintah `ip a` memperlihatkan Ubuntu sudah menggunakan IP `192.168.60.10/24` pada antarmuka eth0. Perintah `ip route` menampilkan default route melalui `192.168.60.1`. Ping ke `8.8.8.8` berhasil, membuktikan Ubuntu bisa mengakses internet melalui jalur yang sudah dikonfigurasi.
+File konfigurasi `/etc/dhcp/dhcpd.conf` berhasil tersimpan dengan tiga blok deklarasi subnet. Perintah `ip a` memperlihatkan Ubuntu sudah menggunakan IP `192.168.60.10/24` pada antarmuka eth0. Perintah `ip route` menampilkan default route melalui `192.168.60.1`. Ping ke `8.8.8.8` berhasil, membuktikan Ubuntu bisa mengakses internet.
 
-![Konfigurasi DHCP Server di Ubuntu VLAN60](tugas%204%202.png)
+![Konfigurasi DHCP Server di Ubuntu VLAN60](tugas_4_2.png)
 
-![Ping ke 8.8.8.8 dan Verifikasi IP Ubuntu](tugas%204%201.png)
+![Ping ke 8.8.8.8 dan Verifikasi IP Ubuntu](tugas_4_1.png)
 
 ---
 
@@ -152,99 +145,93 @@ Mengonfigurasi FortiGate Jakarta sebagai firewall dan gateway antara jaringan lo
    - `port2`: IP `10.10.101.1/30` → terhubung ke Mikrotik-Jakarta.
    - `port3`: IP `10.0.12.2/30` → terhubung ke Mikrotik-ISP.
 3. Tambahkan **static route** default ke `10.0.12.1` (Mikrotik-ISP) melalui port3.
-4. Tambahkan static route untuk setiap subnet VLAN (192.168.10.0/24, 192.168.20.0/24, 192.168.60.0/24) melalui port1 ke vIOS-Jakarta `10.10.100.2`.
+4. Tambahkan static route untuk setiap subnet VLAN (192.168.10.0/24, 192.168.20.0/24, 192.168.60.0/24) melalui port1 ke `10.10.100.2`.
 5. Buat **firewall policy** bernama `LAN-TO-INTERNET`:
    - Sumber: port1 dan port2 (dari jaringan lokal).
    - Tujuan: port3 (ke ISP/internet).
-   - Aksi: Accept dengan NAT diaktifkan agar IP klien tersembunyi di belakang IP publik FortiGate.
+   - Aksi: Accept dengan NAT diaktifkan.
 
 ### Hasil
-Perintah `get system interface physical` memperlihatkan port1, port2, dan port3 sudah dalam keadaan **up** dengan IP yang benar. Perintah `get router info routing-table all` menampilkan tabel routing yang sudah lengkap, mencakup rute statis ke internet, rute langsung ke setiap port, dan rute ke subnet-subnet VLAN. Perintah `show firewall policy` memperlihatkan kebijakan `LAN-TO-INTERNET` sudah terdaftar dan NAT sudah aktif.
+Perintah `get system interface physical` memperlihatkan port1, port2, dan port3 sudah dalam keadaan **up** dengan IP yang benar. Perintah `get router info routing-table all` menampilkan tabel routing yang sudah lengkap. Perintah `show firewall policy` memperlihatkan kebijakan `LAN-TO-INTERNET` sudah terdaftar dan NAT sudah aktif. Ping ke internet (`8.8.8.8`), ke vIOS-Jakarta (`10.10.100.2`), dan ke Mikrotik-ISP (`10.0.12.1`) semuanya berhasil.
 
-Uji konektivitas dari FortiGate ke internet (`execute ping 8.8.8.8`) berhasil. Ping ke vIOS-Jakarta (`10.10.100.2`) dan Mikrotik-ISP (`10.0.12.1`) juga berhasil dengan packet loss 0%.
+![Konfigurasi Interface FortiGate-Jakarta](tugas_5.png)
 
-![Konfigurasi Interface FortiGate-Jakarta](tugas%205.png)
+![Routing Table FortiGate-Jakarta](tugas_5_1.png)
 
-![Routing Table FortiGate-Jakarta](tugas%205%201.png)
+![Firewall Policy dan Routing Table](tugas_5_2.png)
 
-![Firewall Policy dan Ping Verifikasi](tugas%205%202.png)
-
-![Ping ke Internet, vIOS-Jakarta, dan Mikrotik-ISP dari FortiGate](tugas%205%203.png)
+![Ping ke Internet, vIOS-Jakarta, dan Mikrotik-ISP dari FortiGate](tugas_5_3.png)
 
 ---
 
 ## Tugas 6 — Konfigurasi Mikrotik-ISP
 
 ### Tujuan
-Mengonfigurasi Mikrotik-ISP sebagai router ISP yang menghubungkan sisi Jakarta (FortiGate Jakarta) dan sisi Surabaya (FortiGate Surabaya) ke internet, sekaligus sebagai jembatan antara kedua lokasi.
+Mengonfigurasi Mikrotik-ISP sebagai router ISP yang menghubungkan sisi Jakarta dan Surabaya ke internet, sekaligus sebagai jembatan antara kedua lokasi.
 
 ### Langkah-Langkah
 1. Masuk ke terminal Mikrotik-ISP.
 2. Atur alamat IP pada antarmuka:
    - `ether2`: `10.0.12.1/30` → mengarah ke FortiGate Jakarta.
    - `ether3`: `10.0.13.1/30` → mengarah ke FortiGate Surabaya.
-   - `ether1`: mendapat IP dari internet secara otomatis melalui **DHCP Client** (`10.0.137.x/24`).
-3. Tambahkan **default route** menuju gateway yang diperoleh dari DHCP (`10.0.137.1`).
-4. Tambahkan **NAT Masquerade** pada antarmuka `ether1` (keluar ke internet) agar semua perangkat di belakang ISP dapat terhubung ke internet.
+   - `ether1`: mendapat IP dari internet secara otomatis melalui **DHCP Client**.
+3. Tambahkan **default route** menuju gateway yang diperoleh dari DHCP.
+4. Tambahkan **NAT Masquerade** pada antarmuka `ether1` agar semua perangkat di belakang ISP dapat terhubung ke internet.
 5. Verifikasi konfigurasi menggunakan `/ip dhcp-client print`, `/ip address print`, `/ip route print`, dan `/ip firewall nat print`.
 
 ### Hasil
-Perintah `/ip dhcp-client print` memperlihatkan ether1 sudah mendapatkan IP dari internet (10.0.137.x) dengan status **bound**. Perintah `/ip address print` menampilkan ketiga antarmuka aktif dengan IP yang benar. Tabel routing memperlihatkan default route ke internet (ADS 0.0.0.0/0) dan rute langsung ke ether2 serta ether3. Perintah `/ip firewall nat print` memperlihatkan aturan masquerade sudah aktif pada ether1. Ping dari Mikrotik-ISP ke internet (`8.8.8.8`) berhasil dengan **packet loss 0%** dan Ping ke FortiGate Jakarta (`10.0.12.2`) juga berhasil.
+Perintah `/ip dhcp-client print` memperlihatkan ether1 sudah mendapatkan IP dari internet dengan status **bound**. Ketiga antarmuka aktif dengan IP yang benar. Tabel routing memperlihatkan default route ke internet dan rute langsung ke ether2 serta ether3. NAT masquerade aktif pada ether1. Ping dari Mikrotik-ISP ke internet (`8.8.8.8`) berhasil dengan **packet loss 0%** dan ping ke FortiGate Jakarta (`10.0.12.2`) juga berhasil.
 
-![Verifikasi IP, Routing, dan NAT Mikrotik-ISP](tugas%206%201.png)
+![Verifikasi IP, Routing, dan NAT Mikrotik-ISP](tugas_6_1.png)
 
-![Ping dari Mikrotik-ISP ke Internet dan Verifikasi Routing](tugas%206%202.png)
+![Ping dari Mikrotik-ISP ke Internet](tugas_6_2.png)
 
-![Ping ke FortiGate Jakarta dari Mikrotik-ISP](tugas%206%203.png)
+![Ping ke FortiGate Jakarta dari Mikrotik-ISP](tugas_6_3.png)
 
 ---
 
 ## Tugas 7 — Konfigurasi GRE Tunnel dan OSPF antara Jakarta dan Surabaya
 
 ### Tujuan
-Membuat terowongan (tunnel) GRE agar sisi Jakarta dan Surabaya dapat saling berkomunikasi secara langsung melalui jaringan ISP tanpa harus melewati router ISP secara transparan. Lalu, protokol OSPF digunakan untuk saling bertukar informasi routing secara otomatis antara kedua FortiGate.
+Membuat terowongan (tunnel) GRE agar sisi Jakarta dan Surabaya dapat saling berkomunikasi secara langsung melalui jaringan ISP. Protokol OSPF digunakan untuk saling bertukar informasi routing secara otomatis antara kedua FortiGate sehingga semua subnet dari kedua sisi dapat saling dijangkau.
 
 ### Langkah-Langkah
 
 **Di FortiGate Jakarta:**
-1. Buat **GRE Tunnel** bernama `GRE-JKT-SBY`:
-   - IP lokal tunnel: `172.16.0.2/30` (endpoint Jakarta).
-   - Remote gateway: IP FortiGate Surabaya di sisi ISP.
-2. Aktifkan **OSPF** pada FortiGate Jakarta dengan Router ID `1.1.1.1`, lalu tambahkan GRE tunnel sebagai antarmuka OSPF.
-3. Tambahkan **firewall policy** untuk mengizinkan lalu lintas dari tunnel GRE masuk ke jaringan lokal dan sebaliknya:
-   - `SBY-to-JKT-Traffic`: lalu lintas dari GRE-JKT-SBY menuju port1 dan port2.
-   - `JKT-TO-SBY-Traffic`: lalu lintas dari port1 dan port2 menuju GRE-JKT-SBY.
-4. Tambahkan static route untuk subnet Surabaya (192.168.30.0/24 dan 192.168.40.0/24) melalui FortiGate Surabaya.
+1. Buat **GRE Tunnel** bernama `GRE-JKT-SBY` dengan IP lokal tunnel `172.16.0.2/30` dan remote gateway ke FortiGate Surabaya.
+2. Aktifkan **OSPF** dengan Router ID `1.1.1.1`, tambahkan GRE tunnel sebagai antarmuka OSPF.
+3. Tambahkan **firewall policy** untuk mengizinkan lalu lintas melalui tunnel:
+   - `SBY-to-JKT-Traffic`: dari GRE-JKT-SBY menuju port1 dan port2.
+   - `JKT-TO-SBY-Traffic`: dari port1 dan port2 menuju GRE-JKT-SBY.
+4. Tambahkan static route untuk subnet Surabaya melalui tunnel.
 
 **Di FortiGate Surabaya:**
-1. Buat **GRE Tunnel** bernama `GRE-SBY-JKT`:
-   - IP lokal tunnel: `172.16.0.1/30` (endpoint Surabaya).
-   - Remote gateway: IP FortiGate Jakarta di sisi ISP.
+1. Buat **GRE Tunnel** bernama `GRE-SBY-JKT` dengan IP lokal tunnel `172.16.0.1/30` dan remote gateway ke FortiGate Jakarta.
 2. Aktifkan **OSPF** dengan Router ID `2.2.2.2`.
 3. Buat firewall policy serupa untuk mengizinkan lalu lintas melalui tunnel.
-4. Tambahkan static route untuk subnet Jakarta (192.168.10.0/24, 192.168.20.0/24, 192.168.60.0/24) melalui tunnel.
+4. Tambahkan static route untuk subnet Jakarta melalui tunnel.
 
 ### Hasil
 
-**FortiGate Jakarta** — Perintah `get router info ospf neighbor` menunjukkan tetangga OSPF dengan Neighbor ID `2.2.2.2` (FortiGate Surabaya) sudah dalam status **Full** melalui antarmuka GRE-SBY-JKT. Routing table sudah memuat rute OSPF ke subnet-subnet Surabaya (192.168.30.0/24 dan 192.168.40.0/24) yang dipelajari secara otomatis. Ping dari FortiGate Jakarta ke endpoint tunnel Surabaya (172.16.0.1) dan ke internet berhasil.
+**FortiGate Jakarta** — Perintah `get router info ospf neighbor` menunjukkan tetangga OSPF dengan Neighbor ID `2.2.2.2` (FortiGate Surabaya) sudah dalam status **Full** melalui antarmuka GRE-SBY-JKT. Routing table sudah memuat rute OSPF (O E2) ke subnet-subnet Surabaya (192.168.30.0/24 dan 192.168.40.0/24) yang dipelajari secara otomatis. Ping ke endpoint tunnel Surabaya (172.16.0.1) dan ke internet berhasil.
 
-**FortiGate Surabaya** — Perintah `get router info ospf neighbor` menunjukkan tetangga OSPF Neighbor ID `1.1.1.1` (FortiGate Jakarta) sudah **Full** melalui antarmuka GRE-JKT-SBY. Routing table Surabaya sudah memuat rute ke subnet Jakarta yang diperoleh via OSPF (O E2).
+**FortiGate Surabaya** — Perintah `get router info ospf neighbor` menunjukkan Neighbor ID `1.1.1.1` (FortiGate Jakarta) sudah **Full** melalui antarmuka GRE-JKT-SBY. Routing table Surabaya memuat rute ke subnet Jakarta yang diperoleh via OSPF.
 
-![Konfigurasi Firewall Policy GRE Tunnel di FortiGate Jakarta](Screenshot%202026-06-13%20100637.png)
+![Konfigurasi Firewall Policy GRE Tunnel di FortiGate Jakarta](Screenshot_2026-06-13_100637.png)
 
-![Firewall Policy Lengkap (JKT-TO-SBY dan SBY-TO-JKT)](Screenshot%202026-06-13%20101052.png)
+![Firewall Policy Lengkap (JKT-TO-SBY dan SBY-TO-JKT)](Screenshot_2026-06-13_101052.png)
 
-![Routing Table FortiGate Jakarta setelah OSPF aktif (dengan rute OSPF ke Surabaya)](Screenshot%202026-06-13%20102810.png)
+![OSPF Neighbor Full di FortiGate Jakarta (Neighbor 2.2.2.2)](Screenshot_2026-06-13_102755.png)
 
-![OSPF Neighbor Full di FortiGate Jakarta](Screenshot%202026-06-13%20102755.png)
+![Routing Table FortiGate Jakarta setelah OSPF aktif](Screenshot_2026-06-13_102810.png)
 
-![Interface FortiGate Surabaya](Screenshot%202026-06-13%20103727.png)
+![Interface FortiGate Surabaya](Screenshot_2026-06-13_103727.png)
 
-![Routing Table FortiGate Surabaya (OSPF ke Jakarta)](Screenshot%202026-06-13%20103848.png)
+![Routing Table FortiGate Surabaya (rute OSPF ke Jakarta)](Screenshot_2026-06-13_103848.png)
 
-![OSPF Neighbor Full di FortiGate Surabaya dan Ping Verifikasi](Screenshot%202026-06-13%20104015.png)
+![OSPF Neighbor Full di FortiGate Surabaya dan Ping Verifikasi](Screenshot_2026-06-13_104015.png)
 
-![Ping ke Internet dan Endpoint Tunnel dari FortiGate Surabaya](Screenshot%202026-06-13%20103546.png)
+![Ping ke Internet dan Endpoint Tunnel dari FortiGate Surabaya](Screenshot_2026-06-13_103546.png)
 
 ---
 
@@ -258,28 +245,28 @@ Memasang web server Nginx pada Ubuntu VLAN60 sebagai bukti bahwa server dapat di
 2. Edit halaman beranda Nginx di `/var/www/html/index.nginx-debian.html` untuk menampilkan identitas kelompok dan informasi IP server.
 3. Simpan dan pastikan Nginx berjalan.
 4. Dari klien VLAN 10, VLAN 20, VLAN 30, dan VLAN 40:
-   - Jalankan `ip dhcp` atau `ip [alamat-ip] [gateway]` untuk mendapatkan IP dari DHCP.
+   - Jalankan `ip dhcp` untuk mendapatkan IP otomatis dari DHCP server.
    - Lakukan `ping 8.8.8.8` untuk memverifikasi akses internet.
    - Lakukan ping antar VLAN untuk memverifikasi komunikasi lintas jaringan.
 
 ### Hasil
 
-**Ubuntu VLAN60 — Web Server Nginx:**  
+**Ubuntu VLAN60 — Web Server Nginx:**
 Halaman web berhasil diubah menampilkan teks "Halo dari server di Jakarta", nama kelompok, dan informasi IP server (192.168.60.10 | VLAN 60).
 
-![Konfigurasi Halaman Web Nginx Ubuntu VLAN60](Screenshot%202026-06-13%20102552.png)
+![Konfigurasi Halaman Web Nginx Ubuntu VLAN60](Screenshot_2026-06-13_102552.png)
 
-**VLAN 20 (IT) — Klien mendapat IP dari DHCP:**  
+**VLAN 20 (IT) — Klien mendapat IP dari DHCP:**
 Klien VLAN 20 berhasil mendapatkan IP `192.168.20.100/24` dari DHCP Server Ubuntu. Gateway tercatat sebagai `192.168.20.1` (IP virtual VRRP) dan DHCP Server yang melayani adalah `192.168.60.10`. Ping ke `8.8.8.8` berhasil dan ping ke VLAN 40 (`192.168.40.10`) lintas jaringan Jakarta–Surabaya juga berhasil.
 
-![Klien VLAN-20 Mendapat IP DHCP dan Ping Internet serta Lintas VLAN](Screenshot%202026-06-13%20104523.png)
+![Klien VLAN-20 Mendapat IP DHCP dan Ping Internet serta Lintas VLAN](Screenshot_2026-06-13_104523.png)
 
-![Uji VRRP Failover — VLAN 20 masih bisa ping internet saat salah satu router mati](Screenshot%202026-06-13%20105023.png)
+![Uji VRRP Failover — VLAN 20 masih bisa ping internet saat salah satu router mati](Screenshot_2026-06-13_105023.png)
 
-**VLAN 40 (Surabaya) — Klien mendapat IP DHCP:**  
-Klien VLAN 40 (Tinycore) berhasil mendapat IP `192.168.40.10/24`. Ping ke `8.8.8.8` berhasil, dan ping ke VLAN 10 di Jakarta (192.168.10.100) juga berhasil, membuktikan komunikasi lintas kota melalui GRE Tunnel + OSPF berjalan sempurna.
+**VLAN 40 (Surabaya) — Klien mendapat IP DHCP:**
+Klien VLAN 40 berhasil mendapat IP. Ping ke `8.8.8.8` berhasil, dan ping ke VLAN 10 di Jakarta (192.168.10.100) juga berhasil, membuktikan komunikasi lintas kota melalui GRE Tunnel + OSPF berjalan sempurna.
 
-![VLAN 40 Dapat IP dan Ping ke Internet serta VLAN Jakarta](Screenshot%202026-06-13%20094308.png)
+![VLAN 40 Dapat IP dan Ping ke Internet serta VLAN Jakarta](Screenshot_2026-06-13_094308.png)
 
 ---
 
