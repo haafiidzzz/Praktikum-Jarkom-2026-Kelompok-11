@@ -135,11 +135,11 @@ Mengatur Ubuntu Server yang berada di VLAN 60 sebagai server DHCP yang mendistri
 ### Hasil
 Service DHCP berhasil berjalan dengan status **active (running)**. Log menunjukkan server mulai mendengarkan permintaan DHCP di interface `eth0` pada subnet `192.168.60.0/24`.
 
-![DHCP Server Aktif & Running](../assets/tugas4dhcprunning.png)
+![DHCP Server Aktif & Running](../assets/active.jpeg)
 
 Ubuntu server sendiri memiliki IP `192.168.60.10/24` dan dapat terhubung ke internet (`ping 8.8.8.8` berhasil).
 
-![Verifikasi IP Ubuntu & Ping ke Internet](../assets/tugas4ubunteping.png)
+![Verifikasi IP Ubuntu & Ping ke Internet](../assets/8.888.jpeg)
 
 ### Pengujian — Client Mendapatkan IP dari DHCP
 
