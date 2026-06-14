@@ -289,7 +289,6 @@ VLAN 30 Surabaya berhasil ping ke `8.8.8.8` dengan 0% packet loss, membuktikan k
 VLAN 20 (IT, Jakarta) berhasil mendapat IP `192.168.20.100/24` dan melakukan ping ke internet (`8.8.8.8`). Pengujian ping ke `192.168.40.10` (VLAN 40 Surabaya) berhasil dengan 0% packet loss, membuktikan konektivitas Jakarta ke Surabaya melalui tunnel GRE berjalan sempurna.
 
 ![VLAN 20 Jakarta — Ping Internet & Ping ke VLAN 40 Surabaya](../assets/920.jpeg)
-
 ---
 
 ## Tugas 10 — Pengujian Failover VRRP
@@ -326,11 +325,12 @@ VLAN 20 Jakarta berhasil ping ke `192.168.40.10` (VLAN 40 Surabaya) setelah fail
 VLAN 10 Jakarta berhasil mendapatkan IP `192.168.10.100/24` dari DHCP melalui gateway VRRP baru (Mikrotik-Jakarta), membuktikan proses failover VRRP selesai dengan sempurna dan client tidak perlu konfigurasi ulang.
 
 ![VLAN 10 Jakarta — DHCP Tetap Berjalan Setelah Failover](../assets/tumod10.5.jpeg)
+
+Client yang berasal dari Surabaya dapat mengakses web server yang berada di Jakarta.
+
+![Web Server di Jakarta dapat dapat diakses dari Surabaya](../assets/tumod10.6.png)
 ---
 
-Web Server di Jakarta dapat dapat diakses dari Surabaya
-
-![VLAN 20 Jakarta — Ping ke Surabaya Setelah Failover](../assets/tumod10.6.png)
 ## Ringkasan Hasil Pengujian
 
 | No | Yang Diuji | Hasil |
