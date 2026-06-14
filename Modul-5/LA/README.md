@@ -156,7 +156,7 @@ Perintah `get system interface physical` memperlihatkan port1, port2, dan port3 
 
 ![Konfigurasi Interface FortiGate-Jakarta](tugas_5.png)
 
-![Routing Table FortiGate-Jakarta](tugas_5_1.png)
+![Routing Table FortiGate-Jakarta](tugas 5 1.png)
 
 ![Firewall Policy dan Routing Table](tugas_5_2.png)
 
