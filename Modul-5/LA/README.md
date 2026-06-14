@@ -160,17 +160,17 @@ Mengatur FortiGate Jakarta sebagai firewall sekaligus gateway keluar (NAT) untuk
 ### Hasil
 Perintah `get system interface physical` mengonfirmasi semua interface sudah mendapat IP dan berstatus **up**. Tabel routing FortiGate menampilkan route statis ke tiga subnet VLAN Jakarta dan default route ke ISP.
 
-![FortiGate Jakarta — Interface Physical](../assets/tugas5.1.png)
+![FortiGate Jakarta — Interface Physical](../assets/51.jpeg)
 
-![FortiGate Jakarta — Routing Table](../assets/tugas5.2.png)
+![FortiGate Jakarta — Routing Table](../assets/52.jpeg)
 
 Firewall policy **LAN-TO-INTERNET** berhasil terbuat dengan NAT diaktifkan, memungkinkan seluruh client di belakang FortiGate mengakses internet.
 
-![Firewall Policy FortiGate Jakarta](../assets/tugas5.3.png)
+![Firewall Policy FortiGate Jakarta](../assets/53.jpeg)
 
 Pengujian ping dari FortiGate ke internet (`8.8.8.8`), ke vIOS-Jakarta (`10.10.100.2`), dan ke Mikrotik-ISP (`10.0.12.1`) semuanya berhasil 100%.
 
-![Ping FortiGate ke Internet & Tetangga](../assets/tugas5.png)
+![Ping FortiGate ke Internet & Tetangga](../assets/54.jpeg)
 
 ---
 
