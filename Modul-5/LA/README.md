@@ -125,16 +125,10 @@ Mengatur Ubuntu Server yang berada di VLAN 60 sebagai server DHCP yang mendistri
 1. Masuk ke terminal Ubuntu-VLAN60.
 2. Install paket DHCP server: `apt install isc-dhcp-server`.
 3. Edit file `/etc/default/isc-dhcp-server` untuk menentukan interface yang digunakan, yaitu `eth0`.
-
-   ![Konfigurasi Default ISC-DHCP-Server](../assets/tugas4.1.png)
-
 4. Edit file konfigurasi utama `/etc/dhcp/dhcpd.conf` dan tambahkan:
    - Pool untuk **VLAN 10** (Finance): range `192.168.10.100–200`, gateway `192.168.10.1`, DNS `8.8.8.8, 1.1.1.1`
    - Pool untuk **VLAN 20** (IT): range `192.168.20.100–200`, gateway `192.168.20.1`
    - Deklarasi subnet untuk **VLAN 60** tanpa range (server sendiri)
-
-   ![Isi File dhcpd.conf](../assets/tugas4.2.png)
-
 5. Restart dan aktifkan service DHCP: `systemctl restart isc-dhcp-server` dan `systemctl enable isc-dhcp-server`.
 6. Cek status service untuk memastikan berjalan.
 
@@ -153,19 +147,19 @@ Setelah DHCP server aktif dan DHCP relay terkonfigurasi di router, seluruh clien
 
 - **VLAN 10** mendapat IP `192.168.10.100/24` via gateway `192.168.10.1`
 
-  ![VLAN 10 Mendapat IP DHCP](../assets/tugas4vlan10dhcp.png)
+  ![VLAN 10 Mendapat IP DHCP](../assets/vlan10.jpeg)
 
 - **VLAN 20** mendapat IP `192.168.20.100/24` via gateway `192.168.20.1`
 
-  ![VLAN 20 Mendapat IP DHCP](../assets/tugas4vlan20dhcp.png)
+  ![VLAN 20 Mendapat IP DHCP](../assets/vlan20.jpeg)
 
 - **VLAN 30** (Surabaya) mendapat IP `192.168.30.200/24` dari DHCP Mikrotik-Surabaya
 
-  ![VLAN 30 Mendapat IP DHCP](../assets/tugas4vlan30dhcp.png)
+  ![VLAN 30 Mendapat IP DHCP](../assets/vlan30.jpeg)
 
 - **VLAN 40** (Surabaya) dikonfigurasi **IP Statis** `192.168.40.10/24` sesuai ketentuan, bukan DHCP
 
-  ![VLAN 40 IP Statis & Ping ke Internet](../assets/tugas4vlan40static.png)
+  ![VLAN 40 IP Statis & Ping ke Internet](../assets/vlan40.jpeg)
 
   > VLAN 40 berhasil `ping 8.8.8.8`, membuktikan konfigurasi statis dan routing berjalan dengan baik.
 
