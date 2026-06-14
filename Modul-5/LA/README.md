@@ -10,7 +10,7 @@
 
 Topologi yang digunakan pada praktikum ini terdiri dari dua sisi jaringan, yaitu sisi **Jakarta** dan sisi **Surabaya**, yang dihubungkan melalui sebuah router **Mikrotik-ISP** sebagai penyedia layanan internet.
 
-![Topologi Jaringan](assets/topologi.png)
+![Topologi Jaringan](../assets/topologi.png)
 
 **Perangkat yang digunakan:**
 
