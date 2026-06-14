@@ -276,11 +276,11 @@ Membuktikan bahwa seluruh client di sisi Jakarta maupun Surabaya dapat memperole
 
 VLAN 10 (Finance, Jakarta) berhasil mendapatkan IP `192.168.10.100/24` dengan gateway `192.168.10.1` melalui DHCP dari Ubuntu Server.
 
-![VLAN 10 Jakarta — DHCP Berhasil](../assets/tumod9,1.jpeg)
+![VLAN 10 Jakarta — DHCP Berhasil](../assets/vlan10.jpeg)
 
 VLAN 30 (Surabaya) berhasil mendapatkan IP `192.168.30.200/24` dengan gateway `192.168.30.1` melalui DHCP dari Mikrotik-Surabaya.
 
-![VLAN 30 Surabaya — DHCP Berhasil](../assets/tumod9.1.1.jpeg)
+![VLAN 30 Surabaya — DHCP Berhasil](../assets/vlan30.jpeg)
 
 VLAN 30 Surabaya berhasil ping ke `8.8.8.8` dengan 0% packet loss, membuktikan koneksi internet dari sisi Surabaya berjalan normal.
 
