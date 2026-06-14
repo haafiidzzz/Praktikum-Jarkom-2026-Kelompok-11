@@ -228,10 +228,25 @@ Membuat terowongan (tunnel) GRE antara FortiGate Jakarta dan FortiGate Surabaya 
 4. Lakukan hal yang sama (mirror) di FortiGate Surabaya.
 
 ### Hasil
-FortiGate Surabaya berhasil dikonfigurasi dengan interface `port1` (IP `10.0.13.2`) sebagai koneksi ke ISP dan `port2` (IP `10.10.200.1`) sebagai koneksi ke Mikrotik-Surabaya. Tabel routing menampilkan rute ke jaringan sisi Jakarta melalui tunnel GRE-SBY-JKT. Firewall policy di FortiGate Surabaya menampilkan tiga aturan aktif: **Internet-Access** (NAT), **SBY-to-JKT**, dan **JKY-to-SBY** melalui tunnel GRE.
-
-![FortiGate Surabaya — Interface, Routing Table & Firewall Policy](../assets/tugas7.jpeg)
-
+Switch Surabaya berhasil dikonfigurasi. Output `show vlan brief` menampilkan VLAN `30` (nama **SALES**, port `Gi0/1`) dan VLAN `40` (nama **OPERATIONS**, port `Gi0/2`, `Gi0/3`) dalam status **active**. Output `show interfaces trunk` mengkonfirmasi port `Gi0/0` berjalan sebagai trunk mode `on` dengan enkapsulasi `802.1q`, membawa VLAN `30,40`.
+ 
+![Switch Surabaya — Show VLAN Brief & Show Interfaces Trunk](../assets/tumod7.1.jpeg)
+ 
+MikroTik Surabaya berhasil dikonfigurasi dengan tiga IP address: `10.10.200.2/30` pada `ether1` (link ke FortiGate Surabaya), `192.168.30.1/24` pada `vlan30-sales`, dan `192.168.40.1/24` pada `vlan40-operations`. DHCP Server aktif pada interface `vlan30-sales` menggunakan `pool-vlan30` dengan lease time `10m`.
+ 
+![MikroTik Surabaya — IP Address Print & DHCP Server Print](../assets/tumod7.3&4.jpeg)
+ 
+IP Pool untuk VLAN 30 dikonfigurasi dengan range `192.168.30.100–192.168.30.200`. Tabel routing MikroTik Surabaya menampilkan default route (`0.0.0.0/0`) via gateway `10.10.200.1` (FortiGate Surabaya), serta tiga connected route untuk jaringan `10.10.200.0/30`, `192.168.30.0/24`, dan `192.168.40.0/24`.
+ 
+![MikroTik Surabaya — IP Pool Print & IP Route Print](../assets/tumod7.5&6.jpeg)
+ 
+Client VLAN 30 berhasil mendapatkan IP secara DHCP dari MikroTik Surabaya. Output `show ip` mengkonfirmasi IP `192.168.30.200/24`, gateway `192.168.30.1`, dan DNS `8.8.8.8` dengan DHCP Server `192.168.30.1`.
+ 
+![Client VLAN 30 — IP DHCP](../assets/tumod7.7.jpeg)
+ 
+Pengujian ping dari client Surabaya ke `8.8.8.8` (internet) berhasil dengan 0% packet loss, membuktikan konektivitas internet dari sisi Surabaya berjalan melalui MikroTik Surabaya dan FortiGate Surabaya.
+ 
+![Client Surabaya — Ping 8.8.8.8](../assets/tumod7.8.jpeg)
 ---
 
 ## Tugas 8 — Konfigurasi OSPF over GRE
