@@ -249,11 +249,9 @@ Membuat terowongan (tunnel) GRE antara FortiGate Jakarta dan FortiGate Surabaya 
 4. Lakukan hal yang sama (mirror) di FortiGate Surabaya.
 
 ### Hasil
-Firewall policy di FortiGate Jakarta menampilkan tiga aturan yang aktif: policy internet (NAT), policy traffic dari Surabaya ke Jakarta, dan policy dari Jakarta ke Surabaya melalui tunnel GRE.
+FortiGate Surabaya berhasil dikonfigurasi dengan interface `port1` (IP `10.0.13.2`) sebagai koneksi ke ISP dan `port2` (IP `10.10.200.1`) sebagai koneksi ke Mikrotik-Surabaya. Tabel routing menampilkan rute ke jaringan sisi Jakarta melalui tunnel GRE-SBY-JKT. Firewall policy di FortiGate Surabaya menampilkan tiga aturan aktif: **Internet-Access** (NAT), **SBY-to-JKT**, dan **JKY-to-SBY** melalui tunnel GRE.
 
-![Firewall Policy FortiGate — Policy GRE Surabaya-Jakarta](assets/tugas7fortinetpolicy.png)
-
-![Firewall Policy FortiGate — Semua Policy Lengkap](assets/tugas7fortinetpolicy2.png)
+![FortiGate Surabaya — Interface, Routing Table & Firewall Policy](../assets/tugas7.jpeg)
 
 ---
 
@@ -273,47 +271,56 @@ Menjalankan protokol routing OSPF di atas tunnel GRE agar rute-rute jaringan dar
 
 ### Hasil
 
-Kedua FortiGate (Jakarta dan Surabaya) berhasil membentuk **OSPF neighbor** melalui tunnel GRE. Status neighbor menunjukkan state **FULL**, artinya pertukaran informasi routing sudah selesai dan rute sudah tersebar ke kedua sisi.
+FortiGate Surabaya berhasil dikonfigurasi. Output `get system interface physical` menampilkan `port1` (IP `10.0.13.2`, status **up**) dan `port2` (IP `10.10.200.1`, status **up**).
 
-![OSPF Neighbor Terbentuk antara Jakarta dan Surabaya](assets/tugas8neighbor.png)
+![FortiGate Surabaya — Konfigurasi Interface Physical](../assets/tumod8.1.jpeg)
 
-Tabel routing di FortiGate memperlihatkan rute-rute dari sisi lawan sudah masuk dengan kode **O** (OSPF), yang berarti router sudah belajar rute secara otomatis dari tetangganya.
+Tabel routing lengkap FortiGate Surabaya menampilkan rute default ke ISP (`0.0.0.0/0`), rute OSPF ke jaringan Jakarta (`192.168.10.0/24`, `192.168.20.0/24`) melalui tunnel `GRE-SBY-JKT`, serta static route ke jaringan lokal Surabaya. Firewall policy juga dikonfirmasi aktif dengan tiga aturan: **Internet-Access**, **SBY-to-JKT**, dan **JKY-to-SBY**.
 
-![Tabel Routing OSPF — Rute Antar-Sisi Tersebar](assets/tugas8ospfroute.png)
+![FortiGate Surabaya — Routing Table All & Firewall Policy](../assets/tumod8.2.jpeg)
 
-### Pengujian Konektivitas Antar-Sisi
+Pengujian ping dari FortiGate Surabaya ke `8.8.8.8` (internet) dan ke `172.16.0.1` (ujung tunnel GRE sisi Jakarta) berhasil 0% packet loss. Perintah `get router info ospf neighbor` mengonfirmasi neighbor **FULL** dengan Neighbor ID `1.1.1.1` melalui interface `GRE-JKT-SBY`. Tabel routing OSPF Surabaya menampilkan rute ke jaringan Jakarta yang dipelajari secara otomatis.
 
-Setelah OSPF berjalan, pengujian ping antar client Jakarta dan Surabaya dilakukan:
+![FortiGate Surabaya — Ping, OSPF Neighbor & Routing OSPF](../assets/tumod8.3.jpeg)
 
-- **Client Surabaya → Client Jakarta** berhasil (0% packet loss)
+Dari sisi FortiGate Jakarta, ping ke `8.8.8.8` dan ke `172.16.0.1` (ujung tunnel GRE sisi Surabaya) juga berhasil. Perintah `get router info ospf neighbor` mengonfirmasi neighbor **FULL** dengan Neighbor ID `2.2.2.2` melalui interface `GRE-SBY-JKT`. Tabel routing OSPF Jakarta menampilkan rute ke jaringan Surabaya (`192.168.10.0/24`, `192.168.20.0/24`) yang sudah terdistribusi otomatis.
 
-  ![Ping Surabaya ke Jakarta Berhasil](assets/tugas8pingsbyyjkt.png)
-
-- **Client Jakarta → Client Surabaya** berhasil (0% packet loss)
-
-  ![Ping Jakarta ke Surabaya Berhasil](assets/tugas8pingjktsby.png)
+![FortiGate Jakarta — Ping, OSPF Neighbor & Routing OSPF](../assets/tumod8.4-7.jpeg)
 
 ---
 
-## Tugas 9 — Pengujian Akses Web Server Jakarta dari Surabaya
+## Tugas 9 — Pengujian Konektivitas Antar-Sisi & Akses Internet
 
 ### Tujuan
-Membuktikan bahwa client sisi Surabaya dapat mengakses web server yang berada di jaringan Jakarta (Ubuntu-VLAN60, IP `192.168.60.10`) melalui tunnel GRE dan OSPF.
+Membuktikan bahwa seluruh client di sisi Jakarta maupun Surabaya dapat memperoleh IP (DHCP/statis), mengakses internet, dan saling berkomunikasi antar-sisi melalui tunnel GRE dan OSPF.
 
 ### Langkah-Langkah
-1. Pastikan web server sudah berjalan di Ubuntu-VLAN60 (IP `192.168.60.10`). Web server dapat diaktifkan dengan `python3 -m http.server 80` atau layanan Apache.
-2. Dari client Tinycore di sisi Surabaya (VLAN 40), buka browser dan akses `http://192.168.60.10`.
-3. Alternatif: lakukan `wget http://192.168.60.10` dari terminal Tinycore untuk membuktikan koneksi HTTP berhasil.
+1. Pastikan web server sudah berjalan di Ubuntu-VLAN60 (IP `192.168.60.10`).
+2. Verifikasi client VLAN 10 dan VLAN 30 mendapat IP dari DHCP.
+3. Uji ping ke internet (`8.8.8.8`) dari setiap VLAN.
+4. Uji ping antar-sisi: VLAN 20 Jakarta → VLAN 40 Surabaya, dan VLAN 30 Surabaya → internet.
 
 ### Hasil
 
-Tinycore VLAN40 sisi Surabaya mencoba mengakses web server Jakarta di `192.168.60.10`. Hasil pengujian awal menunjukkan koneksi belum berhasil karena masih ada konfigurasi firewall policy yang perlu disesuaikan. Setelah policy diperbaiki, akses web server dari Surabaya ke Jakarta berhasil dilakukan.
+VLAN 10 (Finance, Jakarta) berhasil mendapatkan IP `192.168.10.100/24` dengan gateway `192.168.10.1` melalui DHCP dari Ubuntu Server.
 
-![Percobaan Akses Web Server dari Tinycore Surabaya](assets/tugas9tinycoreweb.png)
+![VLAN 10 Jakarta — DHCP Berhasil](../assets/tumod9.1.jpeg)
 
-![Pengujian Lanjutan Akses Web Server](assets/tugas9tinycore2.png)
+VLAN 30 (Surabaya) berhasil mendapatkan IP `192.168.30.200/24` dengan gateway `192.168.30.1` melalui DHCP dari Mikrotik-Surabaya.
 
-![Hasil Akses Web Server Jakarta dari Surabaya](assets/tugas9webserver.png)
+![VLAN 30 Surabaya — DHCP Berhasil](../assets/tumod9.1.1.jpeg)
+
+VLAN 30 Surabaya berhasil ping ke `8.8.8.8` dengan 0% packet loss, membuktikan koneksi internet dari sisi Surabaya berjalan normal.
+
+![VLAN 30 Surabaya — Ping ke Internet](../assets/tumod9.2.jpeg)
+
+VLAN 20 (IT, Jakarta) berhasil mendapat IP `192.168.20.100/24` dan melakukan ping ke internet (`8.8.8.8`). Pengujian ping ke `192.168.40.10` (VLAN 40 Surabaya) berhasil dengan 0% packet loss, membuktikan konektivitas Jakarta ke Surabaya melalui tunnel GRE berjalan sempurna.
+
+![VLAN 20 Jakarta — Ping Internet & Ping ke VLAN 40 Surabaya](../assets/tumod9.3-4.jpeg)
+
+VLAN 30 Surabaya kembali dikonfirmasi dapat ping ke `8.8.8.8` secara konsisten, membuktikan routing dan NAT di sisi Surabaya berjalan stabil.
+
+![VLAN 30 Surabaya — Konfirmasi Ping Internet](../assets/tumod9.5.jpeg)
 
 ---
 
@@ -331,28 +338,25 @@ Membuktikan bahwa mekanisme VRRP berjalan dengan benar: ketika gateway utama (vI
 
 ### Hasil
 
-Proses failover VRRP berhasil dibuktikan. Ketika vIOS-Jakarta dimatikan, ping dari client hanya berhenti sesaat sesuai interval VRRP (1 detik), kemudian Mikrotik-Jakarta langsung mengambil alih sebagai Master gateway. Client tidak perlu konfigurasi ulang sama sekali karena IP gateway virtual (`.1`) tetap sama.
+Sebelum failover, VLAN 30 berhasil mendapat IP DHCP dan ping ke `8.8.8.8` berjalan normal, menandakan kondisi jaringan stabil sebelum vIOS-Jakarta dimatikan.
 
-![Failover VRRP — Kondisi Sebelum vIOS Dimatikan](assets/vrrpfailover1.jpeg)
+![Kondisi Jaringan Stabil Sebelum Failover](../assets/tumod10.1.jpeg)
 
-![Failover VRRP — vIOS Dimatikan, Mikrotik Mengambil Alih](assets/vrrpfailover2.jpeg)
+Saat vIOS-Jakarta dimatikan, VLAN 20 menunjukkan adanya timeout sesaat pada ping ke `8.8.8.8`, namun koneksi kembali pulih secara otomatis. Topologi PNETLab memperlihatkan kondisi jaringan sisi Surabaya tetap aktif selama proses failover berlangsung.
 
-![Failover VRRP — Ping Lanjut Setelah Perpindahan Gateway](assets/vrrpfailover3.jpeg)
+![Failover Berlangsung — Timeout Sesaat & Topologi](../assets/tumod10.2.jpeg)
 
-![Failover VRRP — Verifikasi di Mikrotik-Jakarta](assets/vrrpfailover4.jpeg)
+VLAN 30 Surabaya tetap dapat ping ke `8.8.8.8` selama proses failover, membuktikan sisi Surabaya tidak terpengaruh.
 
-![Failover VRRP — Status VRRP Master Mikrotik](assets/vrrpfailover5.jpeg)
+![VLAN 30 Surabaya Tetap Online Saat Failover](../assets/tumod10.3.jpeg)
 
-![Failover VRRP — Client Tetap Terhubung](assets/vrrpfailover6.jpeg)
+VLAN 20 Jakarta berhasil ping ke `192.168.40.10` (VLAN 40 Surabaya) setelah failover selesai, membuktikan konektivitas antar-sisi tetap terjaga meskipun gateway utama telah berpindah ke Mikrotik-Jakarta.
 
-![Failover VRRP — Koneksi Pulih Penuh](assets/vrrpfailover7.jpeg)
+![VLAN 20 Jakarta — Ping ke Surabaya Setelah Failover](../assets/tumod10.4.jpeg)
 
-![Failover VRRP — Log Perpindahan Master](assets/vrrpfailover8.jpeg)
+VLAN 10 Jakarta berhasil mendapatkan IP `192.168.10.100/24` dari DHCP melalui gateway VRRP baru (Mikrotik-Jakarta), membuktikan proses failover VRRP selesai dengan sempurna dan client tidak perlu konfigurasi ulang.
 
-![Failover VRRP — Ping ke Internet Tetap Jalan](assets/vrrpfailover9.jpeg)
-
-![Failover VRRP — Semua Client Masih Online](assets/vrrpfailover10.jpeg)
-
+![VLAN 10 Jakarta — DHCP Tetap Berjalan Setelah Failover](../assets/tumod10.5.jpeg)
 ---
 
 ## Ringkasan Hasil Pengujian
