@@ -172,6 +172,13 @@ Pengujian ping dari FortiGate ke internet (`8.8.8.8`), ke vIOS-Jakarta (`10.10.1
 
 ![Ping FortiGate ke Internet & Tetangga](../assets/54.jpeg)
 
+Get Router OSPF info neighboor & get router info routing-table ospf
+
+![Ping FortiGate ke Internet & Tetangga](../assets/<img width="867" height="673" alt="WhatsApp Image 2026-06-13 at 01 34 37" src="https://github.com/user-attachments/assets/7064045b-e1be-4822-a744-de219bc696ac" />
+)
+
+
+
 ---
 
 ## Tugas 6 — Konfigurasi Mikrotik-ISP
