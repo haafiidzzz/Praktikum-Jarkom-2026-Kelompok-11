@@ -284,15 +284,11 @@ VLAN 30 (Surabaya) berhasil mendapatkan IP `192.168.30.200/24` dengan gateway `1
 
 VLAN 30 Surabaya berhasil ping ke `8.8.8.8` dengan 0% packet loss, membuktikan koneksi internet dari sisi Surabaya berjalan normal.
 
-![VLAN 30 Surabaya — Ping ke Internet](../assets/tumod9.2.jpeg)
+![VLAN 30 Surabaya — Ping ke Internet](../assets/99.jpeg)
 
 VLAN 20 (IT, Jakarta) berhasil mendapat IP `192.168.20.100/24` dan melakukan ping ke internet (`8.8.8.8`). Pengujian ping ke `192.168.40.10` (VLAN 40 Surabaya) berhasil dengan 0% packet loss, membuktikan konektivitas Jakarta ke Surabaya melalui tunnel GRE berjalan sempurna.
 
-![VLAN 20 Jakarta — Ping Internet & Ping ke VLAN 40 Surabaya](../assets/tumod9.3-4.jpeg)
-
-VLAN 30 Surabaya kembali dikonfirmasi dapat ping ke `8.8.8.8` secara konsisten, membuktikan routing dan NAT di sisi Surabaya berjalan stabil.
-
-![VLAN 30 Surabaya — Konfirmasi Ping Internet](../assets/tumod9.5.jpeg)
+![VLAN 20 Jakarta — Ping Internet & Ping ke VLAN 40 Surabaya](../assets/920.jpeg)
 
 ---
 
