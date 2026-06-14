@@ -302,7 +302,6 @@ Membuktikan bahwa mekanisme VRRP berjalan dengan benar: ketika gateway utama (vI
 3. Matikan perangkat vIOS-Jakarta (shutdown dari PNETLab).
 4. Amati apakah ping berhenti total atau hanya putus sebentar lalu lanjut kembali.
 5. Jika VRRP berjalan benar, Mikrotik-Jakarta akan otomatis mengambil alih peran sebagai Master gateway dalam waktu singkat (sesuai interval VRRP yang dikonfigurasi).
-6. Web server Jakarta dapat diakses dari Surabaya.
 
 ### Hasil
 
