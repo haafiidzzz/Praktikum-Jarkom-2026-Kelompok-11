@@ -303,6 +303,7 @@ Membuktikan bahwa mekanisme VRRP berjalan dengan benar: ketika gateway utama (vI
 3. Matikan perangkat vIOS-Jakarta (shutdown dari PNETLab).
 4. Amati apakah ping berhenti total atau hanya putus sebentar lalu lanjut kembali.
 5. Jika VRRP berjalan benar, Mikrotik-Jakarta akan otomatis mengambil alih peran sebagai Master gateway dalam waktu singkat (sesuai interval VRRP yang dikonfigurasi).
+6. Web server Jakarta dapat diakses dari Surabaya.
 
 ### Hasil
 
@@ -327,6 +328,9 @@ VLAN 10 Jakarta berhasil mendapatkan IP `192.168.10.100/24` dari DHCP melalui ga
 ![VLAN 10 Jakarta — DHCP Tetap Berjalan Setelah Failover](../assets/tumod10.5.jpeg)
 ---
 
+Web Server di Jakarta dapat dapat diakses dari Surabaya
+
+![VLAN 20 Jakarta — Ping ke Surabaya Setelah Failover](../assets/tumod10.6.png)
 ## Ringkasan Hasil Pengujian
 
 | No | Yang Diuji | Hasil |
