@@ -10,7 +10,7 @@
 
 Topologi yang digunakan pada praktikum ini terdiri dari dua sisi jaringan, yaitu sisi **Jakarta** dan sisi **Surabaya**, yang dihubungkan melalui sebuah router **Mikrotik-ISP** sebagai penyedia layanan internet.
 
-![Topologi Jaringan](images/topologi.png)
+![Topologi Jaringan](assets/topologi.png)
 
 **Perangkat yang digunakan:**
 
@@ -49,7 +49,7 @@ Membuat VLAN di Switch Jakarta agar setiap perangkat dapat dikelompokkan berdasa
 ### Hasil
 Perintah `show vlan brief` menampilkan bahwa VLAN 10 (FINANCE), VLAN 20 (IT), dan VLAN 60 (SERVER-HQ) sudah aktif dan terpasang di port yang benar. Perintah `show interfaces trunk` memastikan bahwa port `Gi0/0` dan `Gi0/1` berstatus **trunking** dan membawa VLAN 10, 20, serta 60.
 
-![Verifikasi VLAN dan Trunk Switch Jakarta](images/tugas_1.png)
+![Verifikasi VLAN dan Trunk Switch Jakarta](assets/tugas1.png)
 
 ---
 
@@ -72,15 +72,15 @@ Mengatur router vIOS-Jakarta agar mampu menjadi gateway untuk setiap VLAN melalu
 ### Hasil
 Perintah `show ip interface brief` menunjukkan semua sub-interface sudah mendapatkan IP dan berstatus **up/up**. Perintah `show vrrp brief` mengonfirmasi bahwa vIOS-Jakarta menjadi **Master** untuk VRRP group 10 dan 60 (priority lebih tinggi), sedangkan untuk group 20 menjadi **Master** karena Mikrotik-Jakarta memiliki priority lebih rendah.
 
-![Konfigurasi Sub-Interface vIOS-Jakarta](images/tugas_2_subinterface.png)
+![Konfigurasi Sub-Interface vIOS-Jakarta](assets/tugas2subinterface.png)
 
-![Sub-Interface Lanjutan & Default Route](images/tugas_2_subinterface_2.png)
+![Sub-Interface Lanjutan & Default Route](assets/tugas2subinterface2.png)
 
-![Verifikasi IP Interface & VRRP Brief](images/tugas_2.png)
+![Verifikasi IP Interface & VRRP Brief](assets/tugas2.png)
 
 Pengujian ping dari vIOS-Jakarta ke `10.10.100.1` (FortiGate Jakarta) berhasil dengan success rate 100%.
 
-![Ping vIOS-Jakarta ke FortiGate](images/tugas_2_ping.png)
+![Ping vIOS-Jakarta ke FortiGate](assets/tugas2ping.png)
 
 ---
 
@@ -106,13 +106,13 @@ Mengatur Mikrotik-Jakarta sebagai router cadangan (backup) menggunakan VRRP, seh
 ### Hasil
 Mikrotik-Jakarta berhasil terkonfigurasi dengan lengkap. Terbukti dari output `/ip address print` yang menampilkan IP untuk semua VLAN, `/interface vrrp print` menunjukkan status **RM (Running Master)** untuk vrrp20, serta DHCP relay aktif untuk VLAN 10 dan VLAN 20.
 
-![Konfigurasi Mikrotik-Jakarta — IP Address, VRRP, Route, DHCP Relay](images/tugas_3_mikrotik_jkt.png)
+![Konfigurasi Mikrotik-Jakarta — IP Address, VRRP, Route, DHCP Relay](assets/tugas3.1.png)
 
-![Detail Konfigurasi Mikrotik-Jakarta Lengkap](images/tugas_3.png)
+![Detail Konfigurasi Mikrotik-Jakarta Lengkap](assets/tugas3.2.png)
 
 Pengujian ping dari Mikrotik-Jakarta ke FortiGate sisi Jakarta (`10.10.101.1`) berhasil dengan 0% packet loss.
 
-![Ping Mikrotik-Jakarta ke FortiGate](images/tugas_3_ping.png)
+![Ping Mikrotik-Jakarta ke FortiGate](assets/tugas3ping.png)
 
 ---
 
@@ -126,14 +126,14 @@ Mengatur Ubuntu Server yang berada di VLAN 60 sebagai server DHCP yang mendistri
 2. Install paket DHCP server: `apt install isc-dhcp-server`.
 3. Edit file `/etc/default/isc-dhcp-server` untuk menentukan interface yang digunakan, yaitu `eth0`.
 
-   ![Konfigurasi Default ISC-DHCP-Server](images/tugas_4_isc_default.png)
+   ![Konfigurasi Default ISC-DHCP-Server](assets/tugas4.1.png)
 
 4. Edit file konfigurasi utama `/etc/dhcp/dhcpd.conf` dan tambahkan:
    - Pool untuk **VLAN 10** (Finance): range `192.168.10.100–200`, gateway `192.168.10.1`, DNS `8.8.8.8, 1.1.1.1`
    - Pool untuk **VLAN 20** (IT): range `192.168.20.100–200`, gateway `192.168.20.1`
    - Deklarasi subnet untuk **VLAN 60** tanpa range (server sendiri)
 
-   ![Isi File dhcpd.conf](images/tugas_4_dhcpconf.png)
+   ![Isi File dhcpd.conf](assets/tugas4.2.png)
 
 5. Restart dan aktifkan service DHCP: `systemctl restart isc-dhcp-server` dan `systemctl enable isc-dhcp-server`.
 6. Cek status service untuk memastikan berjalan.
@@ -141,11 +141,11 @@ Mengatur Ubuntu Server yang berada di VLAN 60 sebagai server DHCP yang mendistri
 ### Hasil
 Service DHCP berhasil berjalan dengan status **active (running)**. Log menunjukkan server mulai mendengarkan permintaan DHCP di interface `eth0` pada subnet `192.168.60.0/24`.
 
-![DHCP Server Aktif & Running](images/tugas_4_dhcp_running.png)
+![DHCP Server Aktif & Running](assets/tugas4dhcprunning.png)
 
 Ubuntu server sendiri memiliki IP `192.168.60.10/24` dan dapat terhubung ke internet (`ping 8.8.8.8` berhasil).
 
-![Verifikasi IP Ubuntu & Ping ke Internet](images/tugas_4_ubuntu_ping.png)
+![Verifikasi IP Ubuntu & Ping ke Internet](assets/tugas4ubunteping.png)
 
 ### Pengujian — Client Mendapatkan IP dari DHCP
 
@@ -153,19 +153,19 @@ Setelah DHCP server aktif dan DHCP relay terkonfigurasi di router, seluruh clien
 
 - **VLAN 10** mendapat IP `192.168.10.100/24` via gateway `192.168.10.1`
 
-  ![VLAN 10 Mendapat IP DHCP](images/tugas_4_vlan10_dhcp.png)
+  ![VLAN 10 Mendapat IP DHCP](assets/tugas4vlan10dhcp.png)
 
 - **VLAN 20** mendapat IP `192.168.20.100/24` via gateway `192.168.20.1`
 
-  ![VLAN 20 Mendapat IP DHCP](images/tugas_4_vlan20_dhcp.png)
+  ![VLAN 20 Mendapat IP DHCP](assets/tugas4vlan20dhcp.png)
 
 - **VLAN 30** (Surabaya) mendapat IP `192.168.30.200/24` dari DHCP Mikrotik-Surabaya
 
-  ![VLAN 30 Mendapat IP DHCP](images/tugas_4_vlan30_dhcp.png)
+  ![VLAN 30 Mendapat IP DHCP](assets/tugas4vlan30dhcp.png)
 
 - **VLAN 40** (Surabaya) dikonfigurasi **IP Statis** `192.168.40.10/24` sesuai ketentuan, bukan DHCP
 
-  ![VLAN 40 IP Statis & Ping ke Internet](images/tugas_4_vlan40_static.png)
+  ![VLAN 40 IP Statis & Ping ke Internet](assets/tugas4vlan40static.png)
 
   > VLAN 40 berhasil `ping 8.8.8.8`, membuktikan konfigurasi statis dan routing berjalan dengan baik.
 
@@ -188,17 +188,17 @@ Mengatur FortiGate Jakarta sebagai firewall sekaligus gateway keluar (NAT) untuk
 ### Hasil
 Perintah `get system interface physical` mengonfirmasi semua interface sudah mendapat IP dan berstatus **up**. Tabel routing FortiGate menampilkan route statis ke tiga subnet VLAN Jakarta dan default route ke ISP.
 
-![FortiGate Jakarta — Interface Physical](images/tugas_5_fortigate_interface.png)
+![FortiGate Jakarta — Interface Physical](assets/tugas5.1.png)
 
-![FortiGate Jakarta — Routing Table](images/tugas_5_routing_table.png)
+![FortiGate Jakarta — Routing Table](assets/tugas5.2.png)
 
 Firewall policy **LAN-TO-INTERNET** berhasil terbuat dengan NAT diaktifkan, memungkinkan seluruh client di belakang FortiGate mengakses internet.
 
-![Firewall Policy FortiGate Jakarta](images/tugas_5_firewall_policy.png)
+![Firewall Policy FortiGate Jakarta](assets/tugas5.3.png)
 
 Pengujian ping dari FortiGate ke internet (`8.8.8.8`), ke vIOS-Jakarta (`10.10.100.2`), dan ke Mikrotik-ISP (`10.0.12.1`) semuanya berhasil 100%.
 
-![Ping FortiGate ke Internet & Tetangga](images/tugas_5_ping.png)
+![Ping FortiGate ke Internet & Tetangga](assets/tugas5.png)
 
 ---
 
@@ -219,15 +219,15 @@ Mengatur Mikrotik-ISP sebagai router inti yang menghubungkan sisi Jakarta dan si
 ### Hasil
 Output `/ip address print` memperlihatkan semua IP sudah terpasang dengan benar. `/ip route print` menunjukkan default route aktif via `10.0.137.1`. `/ip firewall nat print` mengonfirmasi aturan masquerade sudah aktif di `ether1`.
 
-![Konfigurasi Mikrotik-ISP — IP, Route, NAT](images/tugas_6_isp_config.png)
+![Konfigurasi Mikrotik-ISP — IP, Route, NAT](assets/tugas6.1.png)
 
 Pengujian ping dari Mikrotik-ISP ke internet (`8.8.8.8`) berhasil dengan 0% packet loss, membuktikan koneksi ISP berfungsi normal.
 
-![Ping Mikrotik-ISP ke Internet](images/tugas_6_isp_ping.png)
+![Ping Mikrotik-ISP ke Internet](assets/tugas6.2.png)
 
 Ping ke FortiGate Jakarta (`10.0.12.2`) juga berhasil sempurna, menandakan koneksi antar ISP dan sisi Jakarta terhubung dengan baik.
 
-![Ping Mikrotik-ISP ke FortiGate Jakarta](images/tugas_6_isp_ping2.png)
+![Ping Mikrotik-ISP ke FortiGate Jakarta](assets/tugas6.3.png)
 
 ---
 
@@ -251,9 +251,9 @@ Membuat terowongan (tunnel) GRE antara FortiGate Jakarta dan FortiGate Surabaya 
 ### Hasil
 Firewall policy di FortiGate Jakarta menampilkan tiga aturan yang aktif: policy internet (NAT), policy traffic dari Surabaya ke Jakarta, dan policy dari Jakarta ke Surabaya melalui tunnel GRE.
 
-![Firewall Policy FortiGate — Policy GRE Surabaya-Jakarta](images/tugas_7_fortinet_policy.png)
+![Firewall Policy FortiGate — Policy GRE Surabaya-Jakarta](assets/tugas7fortinetpolicy.png)
 
-![Firewall Policy FortiGate — Semua Policy Lengkap](images/tugas_7_fortinet_policy2.png)
+![Firewall Policy FortiGate — Semua Policy Lengkap](assets/tugas7fortinetpolicy2.png)
 
 ---
 
@@ -275,11 +275,11 @@ Menjalankan protokol routing OSPF di atas tunnel GRE agar rute-rute jaringan dar
 
 Kedua FortiGate (Jakarta dan Surabaya) berhasil membentuk **OSPF neighbor** melalui tunnel GRE. Status neighbor menunjukkan state **FULL**, artinya pertukaran informasi routing sudah selesai dan rute sudah tersebar ke kedua sisi.
 
-![OSPF Neighbor Terbentuk antara Jakarta dan Surabaya](images/tugas_8_neighbor.png)
+![OSPF Neighbor Terbentuk antara Jakarta dan Surabaya](assets/tugas8neighbor.png)
 
 Tabel routing di FortiGate memperlihatkan rute-rute dari sisi lawan sudah masuk dengan kode **O** (OSPF), yang berarti router sudah belajar rute secara otomatis dari tetangganya.
 
-![Tabel Routing OSPF — Rute Antar-Sisi Tersebar](images/tugas_8_ospf_route.png)
+![Tabel Routing OSPF — Rute Antar-Sisi Tersebar](assets/tugas8ospfroute.png)
 
 ### Pengujian Konektivitas Antar-Sisi
 
@@ -287,11 +287,11 @@ Setelah OSPF berjalan, pengujian ping antar client Jakarta dan Surabaya dilakuka
 
 - **Client Surabaya → Client Jakarta** berhasil (0% packet loss)
 
-  ![Ping Surabaya ke Jakarta Berhasil](images/tugas_8_ping_sby_jkt.png)
+  ![Ping Surabaya ke Jakarta Berhasil](assets/tugas8pingsbyyjkt.png)
 
 - **Client Jakarta → Client Surabaya** berhasil (0% packet loss)
 
-  ![Ping Jakarta ke Surabaya Berhasil](images/tugas_8_ping_jkt_sby.png)
+  ![Ping Jakarta ke Surabaya Berhasil](assets/tugas8pingjktsby.png)
 
 ---
 
@@ -309,11 +309,11 @@ Membuktikan bahwa client sisi Surabaya dapat mengakses web server yang berada di
 
 Tinycore VLAN40 sisi Surabaya mencoba mengakses web server Jakarta di `192.168.60.10`. Hasil pengujian awal menunjukkan koneksi belum berhasil karena masih ada konfigurasi firewall policy yang perlu disesuaikan. Setelah policy diperbaiki, akses web server dari Surabaya ke Jakarta berhasil dilakukan.
 
-![Percobaan Akses Web Server dari Tinycore Surabaya](images/tugas_9_tinycore_web.png)
+![Percobaan Akses Web Server dari Tinycore Surabaya](assets/tugas9tinycoreweb.png)
 
-![Pengujian Lanjutan Akses Web Server](images/tugas_9_tinycore2.png)
+![Pengujian Lanjutan Akses Web Server](assets/tugas9tinycore2.png)
 
-![Hasil Akses Web Server Jakarta dari Surabaya](images/tugas_9_webserver.png)
+![Hasil Akses Web Server Jakarta dari Surabaya](assets/tugas9webserver.png)
 
 ---
 
@@ -333,25 +333,25 @@ Membuktikan bahwa mekanisme VRRP berjalan dengan benar: ketika gateway utama (vI
 
 Proses failover VRRP berhasil dibuktikan. Ketika vIOS-Jakarta dimatikan, ping dari client hanya berhenti sesaat sesuai interval VRRP (1 detik), kemudian Mikrotik-Jakarta langsung mengambil alih sebagai Master gateway. Client tidak perlu konfigurasi ulang sama sekali karena IP gateway virtual (`.1`) tetap sama.
 
-![Failover VRRP — Kondisi Sebelum vIOS Dimatikan](images/vrrp_failover_1.jpeg)
+![Failover VRRP — Kondisi Sebelum vIOS Dimatikan](assets/vrrpfailover1.jpeg)
 
-![Failover VRRP — vIOS Dimatikan, Mikrotik Mengambil Alih](images/vrrp_failover_2.jpeg)
+![Failover VRRP — vIOS Dimatikan, Mikrotik Mengambil Alih](assets/vrrpfailover2.jpeg)
 
-![Failover VRRP — Ping Lanjut Setelah Perpindahan Gateway](images/vrrp_failover_3.jpeg)
+![Failover VRRP — Ping Lanjut Setelah Perpindahan Gateway](assets/vrrpfailover3.jpeg)
 
-![Failover VRRP — Verifikasi di Mikrotik-Jakarta](images/vrrp_failover_4.jpeg)
+![Failover VRRP — Verifikasi di Mikrotik-Jakarta](assets/vrrpfailover4.jpeg)
 
-![Failover VRRP — Status VRRP Master Mikrotik](images/vrrp_failover_5.jpeg)
+![Failover VRRP — Status VRRP Master Mikrotik](assets/vrrpfailover5.jpeg)
 
-![Failover VRRP — Client Tetap Terhubung](images/vrrp_failover_6.jpeg)
+![Failover VRRP — Client Tetap Terhubung](assets/vrrpfailover6.jpeg)
 
-![Failover VRRP — Koneksi Pulih Penuh](images/vrrp_failover_7.jpeg)
+![Failover VRRP — Koneksi Pulih Penuh](assets/vrrpfailover7.jpeg)
 
-![Failover VRRP — Log Perpindahan Master](images/vrrp_failover_8.jpeg)
+![Failover VRRP — Log Perpindahan Master](assets/vrrpfailover8.jpeg)
 
-![Failover VRRP — Ping ke Internet Tetap Jalan](images/vrrp_failover_9.jpeg)
+![Failover VRRP — Ping ke Internet Tetap Jalan](assets/vrrpfailover9.jpeg)
 
-![Failover VRRP — Semua Client Masih Online](images/vrrp_failover_10.jpeg)
+![Failover VRRP — Semua Client Masih Online](assets/vrrpfailover10.jpeg)
 
 ---
 
